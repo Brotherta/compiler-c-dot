@@ -38,21 +38,21 @@ SEP                     [ \t\v\n\f]
 "<"                     { return LT; }
 "=="                    { return EQ; }
 "!="                    { return NEQ; }
-"="                     { return AFFECT; }
-"!"                     { return NOT; }
-"{"                     { return DEB_BLOCK; }
-"}"                     { return FIN_BLOCK; }
-";"                     { return PV;}
-"("                     { return LPRT; }
-")"                     { return RPRT; }
-"["                     { return LCRT; }
-"]"                     { return RCRT; }
+"="                     { return '='; }
+"!"                     { return '!'; }
+"{"                     { return '{'; }
+"}"                     { return '}'; }
+";"                     { return ';';}
+"("                     { return '('; }
+")"                     { return ')'; }
+"["                     { return '['; }
+"]"                     { return ']'; }
 "+"                     { return PLUS; }
 "*"                     { return MUL ; }
 "-"                     { return MOINS; }
 "/"                     { return DIV; }
-","                     { return VIRG; }
-":"                     { return DP; }
+","                     { return ','; }
+":"                     { return ':'; }
 {SEP}+                  {} // on fait rien
 .                       { return OTHER; }
 %%

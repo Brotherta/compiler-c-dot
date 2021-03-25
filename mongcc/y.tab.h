@@ -80,19 +80,18 @@ extern int yydebug;
     PV = 286,
     COM = 287,
     OTHER = 288,
-    SEP = 289,
-    DP = 290,
-    VIRG = 291,
-    DIV = 292,
-    MOINS = 293,
-    MUL = 294,
-    PLUS = 295,
-    LCRT = 296,
-    RCRT = 297,
-    LPRT = 298,
-    RPRT = 299,
-    OP = 300,
-    REL = 301
+    DP = 289,
+    VIRG = 290,
+    DIV = 291,
+    MOINS = 292,
+    MUL = 293,
+    PLUS = 294,
+    LCRT = 295,
+    RCRT = 296,
+    LPRT = 297,
+    RPRT = 298,
+    OP = 299,
+    REL = 300
   };
 #endif
 /* Tokens.  */
@@ -127,30 +126,29 @@ extern int yydebug;
 #define PV 286
 #define COM 287
 #define OTHER 288
-#define SEP 289
-#define DP 290
-#define VIRG 291
-#define DIV 292
-#define MOINS 293
-#define MUL 294
-#define PLUS 295
-#define LCRT 296
-#define RCRT 297
-#define LPRT 298
-#define RPRT 299
-#define OP 300
-#define REL 301
+#define DP 289
+#define VIRG 290
+#define DIV 291
+#define MOINS 292
+#define MUL 293
+#define PLUS 294
+#define LCRT 295
+#define RCRT 296
+#define LPRT 297
+#define RPRT 298
+#define OP 299
+#define REL 300
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 22 "monggc.y"
+#line 22 "mongcc.y"
 
 	char* name;
 	int entier;
 
-#line 154 "y.tab.h"
+#line 152 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

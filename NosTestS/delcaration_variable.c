@@ -1,2 +1,7 @@
-int a = 2;
-int b = 3;
+int a;
+int b;
+
+int main(int a) {
+    int a;
+    a = 1;
+}

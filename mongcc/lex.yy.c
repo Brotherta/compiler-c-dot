@@ -913,47 +913,47 @@ YY_RULE_SETUP
 case 26:
 YY_RULE_SETUP
 #line 41 "mongcc.l"
-{ return AFFECT; }
+{ return '='; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 42 "mongcc.l"
-{ return NOT; }
+{ return '!'; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
 #line 43 "mongcc.l"
-{ return DEB_BLOCK; }
+{ return '{'; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
 #line 44 "mongcc.l"
-{ return FIN_BLOCK; }
+{ return '}'; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
 #line 45 "mongcc.l"
-{ return PV;}
+{ return ';';}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
 #line 46 "mongcc.l"
-{ return LPRT; }
+{ return '('; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
 #line 47 "mongcc.l"
-{ return RPRT; }
+{ return ')'; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 48 "mongcc.l"
-{ return LCRT; }
+{ return '['; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 49 "mongcc.l"
-{ return RCRT; }
+{ return ']'; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
@@ -978,12 +978,12 @@ YY_RULE_SETUP
 case 39:
 YY_RULE_SETUP
 #line 54 "mongcc.l"
-{ return VIRG; }
+{ return ','; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 55 "mongcc.l"
-{ return DP; }
+{ return ':'; }
 	YY_BREAK
 case 41:
 /* rule 41 can match eol */
