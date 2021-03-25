@@ -4,64 +4,56 @@ H                       [a-fA-F0-9]
 SEP                     [ \t\v\n\f]
 %{
 #include <stdio.h>
-// #include "y.tab.h"
+#include "y.tab.h"
 
 %}
 
 
 %%
-"extern"                { printf("EXTERN "); }  // mot reservé //
-"int"                   { printf("INT "); }  // return int
-"void"                  { printf("VOID "); }
-"for"                   { printf("FOR "); }
-"while"                 { printf("WHILE "); }
-"if"                    { printf("IF "); }
-"else"                  { printf("ELSE "); }
-"switch"                { printf("SWITCH "); }
-"case"                  { printf("CASE "); }
-"default"               { printf("DEFAULT "); }
-"break"                 { printf("BREAK "); }
-"return"                { printf("RETURN "); }                      // mot reservé  \\ 
+"extern"                { return EXTERN; }  // mot reservé //
+"int"                   { return INT; }  // return int
+"void"                  { return VOID; }
+"for"                   { return FOR; }
+"while"                 { return WHILE; }
+"if"                    { return IF; }
+"else"                  { return ELSE; }
+"switch"                { return SWITCH; }
+"case"                  { return CASE; }
+"default"               { return DEFAULT; }
+"break"                 { return BREAK; }
+"return"                { return RETURN; }                      // mot reservé  \\ 
 
-{L}({L}|{D})*           { printf("ID "); }  // Variables
-{D}+                    { printf("CONST "); }  // 
-"/*"({L}|{SEP}|{D})*"*/" { printf("COM "); }
-
-L?'(\\|.[^\\'])+'       { printf("TAB "); }
-L?\"(\\.|[^\\"])*\"     { printf("TAB "); }
+{L}({L}|{D})*           { yylval.name = strdup(yytext); return ID; }  // Variables
+{D}+                    { yylval.entier = atoi(yytext); return CONST; }  // 
+"/*"({L}|{SEP}|{D})*"*/" {}
 
 
-">>"                    { printf("RSHIFT "); }
-"<<"                    { printf("LSHIFT "); }
-"&&"                    { printf("BAND "); }
-"||"                    { printf("LOR "); }
-"<="                    { printf("LEQ "); }
-">="                    { printf("GEQ "); }
-">"                     { printf("GT "); }
-"<"                     { printf("LT "); }
-"=="                    { printf("EQ "); }
-"!="                    { printf("NEQ "); }
-"="                     { printf("AFFECT "); }
-"!"                     { printf("NOT "); }
-"{"                     { printf("DEB_BLOCK "); }
-"}"                     { printf("FIN_BLOCK "); }
-";"                     { printf("EOI "); }
-"("                     { printf("LPRT "); }
-")"                     { printf("RPRT "); }
-"["                     { printf("LCRT "); }
-"]"                     { printf("RCRT ");}
-"+"                     { printf("PLUS ");}
-"*"                     { printf("MUL ");}
-"-"                     { printf("MOINS ");}
-"/"                     { printf("DIV ");}
-","                     { printf("VIRG ");}
-":"                     { printf("DP ");}
-{SEP}+                  { printf("SEP "); }
-.                       { printf("OTHER "); }
+">>"                    { return RSHIFT; }
+"<<"                    { return LSHIFT; }
+"&&"                    { return AND; }
+"||"                    { return OR; }
+"<="                    { return LEQ; }
+">="                    { return GEQ; }
+">"                     { return GT; }
+"<"                     { return LT; }
+"=="                    { return EQ; }
+"!="                    { return NEQ; }
+"="                     { return AFFECT; }
+"!"                     { return NOT; }
+"{"                     { return DEB_BLOCK; }
+"}"                     { return FIN_BLOCK; }
+";"                     { return PV;}
+"("                     { return LPRT; }
+")"                     { return RPRT; }
+"["                     { return LCRT; }
+"]"                     { return RCRT; }
+"+"                     { return PLUS; }
+"*"                     { return MUL ; }
+"-"                     { return MOINS; }
+"/"                     { return DIV; }
+","                     { return VIRG; }
+":"                     { return DP; }
+{SEP}+                  {} // on fait rien
+.                       { return OTHER; }
 %%
 
-int main()
-{
-    yylex();
-    return 0;
-}
