@@ -3,9 +3,12 @@
 	#include <string.h>
 	#include <stdio.h>
 	void yyerror(char *s);
+	
 %}
+
 %token <name> IDENTIFICATEUR
 %token <entier> CONSTANTE
+
 %token VOID INT FOR WHILE IF ELSE SWITCH CASE DEFAULT
 %token BREAK RETURN PLUS MOINS MUL DIV LSHIFT RSHIFT BAND BOR LAND LOR LT GT 
 %token GEQ LEQ EQ NEQ NOT EXTERN
@@ -155,12 +158,17 @@ binary_comp	:
 ;
 
 %%
+
 void yyerror(char *s)
 {
 	fprintf( stderr, "%s\n", s );
 }
+
 int main()
 {
+	//init_table();
 	yyparse();
+	//creation_dot();
+	//TD6 MOTHER FUCKER BITCH LOOK AT THE TD6 !!!!!!!!
 	return 0;
 }
