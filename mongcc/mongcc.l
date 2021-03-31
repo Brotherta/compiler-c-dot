@@ -23,15 +23,17 @@ SEP                     [ \t\v\n\f]
 "break"                 { return BREAK; }
 "return"                { return RETURN; }                      // mot reservé  \\ 
 
-{L}({L}|{D})*           { yylval.name = strdup(yytext); return ID; }  // Variables
-{D}+                    { yylval.entier = atoi(yytext); return CONST; }  // 
+{L}({L}|{D})*           { yylval.name = strdup(yytext); return IDENTIFICATEUR; }  // Variables
+{D}+                    { yylval.entier = atoi(yytext); return CONSTANTE; }  // 
 "/*"({L}|{SEP}|{D})*"*/" {}
 
 
 ">>"                    { return RSHIFT; }
 "<<"                    { return LSHIFT; }
-"&&"                    { return AND; }
-"||"                    { return OR; }
+"&&"                    { return LAND; }
+"&"                     { return BAND;}
+"||"                    { return LOR; }
+"|"                     { return BOR; }
 "<="                    { return LEQ; }
 ">="                    { return GEQ; }
 ">"                     { return GT; }
@@ -54,6 +56,6 @@ SEP                     [ \t\v\n\f]
 ","                     { return ','; }
 ":"                     { return ':'; }
 {SEP}+                  {} // on fait rien
-.                       { return OTHER; }
+.                       { yyerror(strdup(yytext)); }
 %%
 

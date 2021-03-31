@@ -10,4 +10,4 @@ all:
 	$(CC) -g lex.yy.c y.tab.c -lfl -o $(TARGET)
 
 clean:
-	rm $(TARGET)
+	rm $(TARGET) y.tab.c y.tab.h lex.yy.c
