@@ -1,7 +1,8 @@
 int a;
 int b;
 
-int main(int a) {
-    int a;
-    a = 1;
+int main() {
+    a = 5;
+    b = 10;
+    
 }

@@ -3,7 +3,49 @@
 	#include <string.h>
 	#include <stdio.h>
 	void yyerror(char *s);
+
+	typedef struct _programme{
+		struct _fonction *fonctions;
+		struct _declaration * declarations;
+		
+	} programme;
+
+	typedef struct _fonction {
+		char *nom;
+		struct _declaration *declarations;
+		struct _bloc *instructions;
+		struct _fonction *next;
+	} fonction;
+
+	typedef enum {FUNC, IF, ELSE, FOR, WHILE} type_bloc;
+	typedef enum {COND, CALL, AFFECT, RETURN}type_instruction;
+	typedef struct _instructions {
+		type_instruction type;
+		struct _instructions *next;
+	} instruction;
 	
+	typedef struct _bloc{
+		type_instruction type;
+		struct _instructions *instructionS;
+		struct _bloc *next;
+	} bloc;
+
+	int main(){
+		while(1){
+			i = 5;
+			a = i + 1;
+			printd(i);
+		} // bloc
+		if(true) do // instruction
+		if(true) {do and do} // bloc
+	}
+
+	
+	typedef struct _declaration{
+		char* nom;
+		int valeur;
+		
+	}declaration;
 %}
 
 %token <name> IDENTIFICATEUR
@@ -26,129 +68,131 @@
 %union {
 	char* name;
 	int entier;
+	
 }
 
+
 %%
-programme	:	
+programme:
 		liste_declarations liste_fonctions		{}
 ;
-liste_declarations	:	
+liste_declarations:
 		liste_declarations declaration 			{}
 	|											{}
 ;	
-liste_fonctions	:	
+liste_fonctions:
 		liste_fonctions fonction				{}
-|               fonction						{}
+|       fonction								{}
 ;
-declaration	:	
+declaration:	
 		type liste_declarateurs ';'				{}
 ;
-liste_declarateurs	:	
+liste_declarateurs:	
 		liste_declarateurs ',' declarateur		{}
 	|	declarateur								{}
 ;
-declarateur	:	
-		IDENTIFICATEUR							{printf("%s\n", $1);}
+declarateur:	
+		IDENTIFICATEUR							{ printf("%s\n", $1); }
 	|	declarateur '[' CONSTANTE ']'
 ;
-fonction	:	
+fonction:	
 		type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}'
 	|	EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' { printf("Extern "); }
 ;
-type	:	
+type:	
 		VOID						{ printf("de type VOID "); }	
 	|	INT							{ printf("de type INT "); }
 ;
-liste_parms	:	
+liste_parms:	
 		liste_parms ',' parm		{ printf("liste param "); }
 	|	parm						{ printf("un param "); }
 	| 								{printf("rien ");}
 ;
-parm	:	
+parm:	
 		INT IDENTIFICATEUR			{ printf("%s ", $2); }
 	|								{ printf("aucun param "); }
 ;
-liste_instructions :	
+liste_instructions:	
 		liste_instructions instruction
 	|
 ;
-instruction	:	
-		iteration
-	|	selection
+instruction:	
+		iteration					
+	|	selection					{/* stock a la suite de ma precedente instruction*/}
 	|	saut
 	|	affectation ';'
 	|	bloc
-	|	appel
+	|	appel						{/* enum CALL*/}
 ;
-iteration	:	
+iteration:
 		FOR '(' affectation ';' condition ';' affectation ')' instruction
 	|	WHILE '(' condition ')' instruction
 ;
-selection	:	
+selection:	
 		IF '(' condition ')' instruction %prec THEN
 	|	IF '(' condition ')' instruction ELSE instruction
-	|	SWITCH '(' expression ')' instruction
-	|	CASE CONSTANTE ':' instruction
+	|	SWITCH '(' expression ')' instruction		{/* creer instruction switch*/}
+	|	CASE CONSTANTE ':' instruction				{/* cree instruction case */}
 	|	DEFAULT ':' instruction
 ;
-saut	:	
+saut:	
 		BREAK ';'
 	|	RETURN ';'									
 	|	RETURN expression ';'						{ printf("return\n"); }
 ;
-affectation	:	
+affectation:	
 		variable '=' expression						{ printf("\n");}
 ;
-bloc	:	
+bloc:	
 		'{' liste_declarations liste_instructions '}'
 ;
-appel	:	
+appel:	
 			IDENTIFICATEUR '(' liste_expressions ')' ';'	{ printf("appel function %s \n", $1); }	
 ;
-retour_appel :
+retour_appel:
 		IDENTIFICATEUR '(' liste_expressions ')'		{ printf("utilisation function %s ", $1); }
 ;
-variable	:	
+variable:	
 		IDENTIFICATEUR								{ printf("variable %s ", $1); }
 	|	variable '[' expression ']'
 ;
-expression	:	
+expression:	
 		'(' expression ')'
-	|	expression binary_op expression %prec OP
+	|	expression binary_op expression %prec OP	
 	|	MOINS expression							{ printf("- ");}
 	|	CONSTANTE									{ printf("vaut %d ",$1); }
 	|	variable
 	|	IDENTIFICATEUR '(' liste_expressions ')'
 	| 	retour_appel
 ;
-liste_expressions	:	
+liste_expressions:	
 		liste_expressions ',' expression
 	|	expression
 	| 
 ;
-condition	:	
+condition:	
 		NOT '(' condition ')'
 	|	condition binary_rel condition %prec REL
 	|	'(' condition ')'
 	|	expression binary_comp expression
 ;
-binary_op	:	
+binary_op:	
 		PLUS										{ printf(" + "); }
 	|   MOINS										{ printf(" - "); }
 	|	MUL											{ printf(" * "); }
 	|	DIV											{ printf(" / "); }
 	|   LSHIFT										{ printf(" << "); }
 	|   RSHIFT										{ printf(" >> "); }
-	|	LAND											{ printf(" && "); }
+	|	LAND										{ printf(" && "); }
 	|	LOR											{ printf(" || "); }
 	|	BAND										{}
 	|	BOR											{}
 ;
-binary_rel	:	
+binary_rel:	
 		LAND
 	|	LOR
 ;
-binary_comp	:	
+binary_comp:	
 		LT
 	|	GT
 	|	GEQ
