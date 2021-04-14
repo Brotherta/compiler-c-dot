@@ -5,6 +5,8 @@
 	#include "structure.h"
 	void yyerror(char *s);
 
+	
+
 %}
 
 %token VOID INT FOR WHILE IF ELSE SWITCH CASE DEFAULT
@@ -26,6 +28,7 @@
 	char* op;
 	char* type_var;
 	int entier;
+	struct _fonction *f_t;
 	struct _expression *expr_t;
 }
 
@@ -39,57 +42,46 @@
 programme:
 		liste_declarations liste_fonctions		{}
 ;
-
 liste_declarations:
 		liste_declarations declaration 			{}
 	|											{}
-;
-
+;	
 liste_fonctions:
 		liste_fonctions fonction				{}
 |       fonction								{}
 ;
-
 declaration:	
 		type liste_declarateurs ';'				{}
 ;
-
 liste_declarateurs:	
 		liste_declarateurs ',' declarateur		{}
 	|	declarateur								{}
 ;
-
 declarateur:	
 		IDENTIFICATEUR							{ printf("%s\n", $1); }
 	|	declarateur '[' CONSTANTE ']'
 ;
-
 fonction:	
 		type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}'
 	|	EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' { printf("Extern "); }
 ;
-
 type:	
 		VOID						{ $$ = "void"; }	
 	|	INT							{ $$ = "int"; }
 ;
-
 liste_parms:	
 		liste_parms ',' parm		{ printf("liste param "); }
 	|	parm						{ printf("un param "); }
 	| 								{printf("rien ");}
 ;
-
 parm:	
 		INT IDENTIFICATEUR			{ printf("%s ", $2); }
 	|								{ printf("aucun param "); }
 ;
-
 liste_instructions:	
 		liste_instructions instruction
 	|
 ;
-
 instruction:	
 		iteration					
 	|	selection					{/* stock a la suite de ma precedente instruction*/}
@@ -98,12 +90,10 @@ instruction:
 	|	bloc
 	|	appel						{/* enum CALL*/}
 ;
-
 iteration:
 		FOR '(' affectation ';' condition ';' affectation ')' instruction
 	|	WHILE '(' condition ')' instruction
 ;
-
 selection:	
 		IF '(' condition ')' instruction %prec THEN
 	|	IF '(' condition ')' instruction ELSE instruction
@@ -111,37 +101,34 @@ selection:
 	|	CASE CONSTANTE ':' instruction				{/* cree instruction case */}
 	|	DEFAULT ':' instruction
 ;
-
 saut:	
 		BREAK ';'
 	|	RETURN ';'									
 	|	RETURN expression ';'						{ printf("return \n"); }
 ;
-
 affectation:	
-		variable '=' expression						{ 
-														printf(" _%s %s %s %s %s_ ", 
-																$3->expr1_t->expr1_t->node,
-																$3->expr1_t->node, 
-																$3->expr1_t->expr2_t->node,
-																$3->node, 
-																$3->expr2_t->node);
-													}
+		expression '=' expression						{ 
+															printf(" _%s %s %s %s %s_ ", 
+																	$3->expr1->expr1->node,
+																	$3->expr1->node, 
+																	$3->expr1->expr2->node,
+																	$3->node, 
+																	$3->expr2->node);
+														}
 ;
-
 bloc:	
 		'{' liste_declarations liste_instructions '}'
 ;
-
 appel:	
 			IDENTIFICATEUR '(' liste_expressions ')' ';'	{ printf("appel function %s \n", $1); }	
 ;
-
+retour_appel:
+		IDENTIFICATEUR '(' liste_expressions ')'		{ printf("utilisation function %s ", $1); }
+;
 variable:	
 		IDENTIFICATEUR								{ printf("variable %s ", $1); }
 	|	variable '[' expression ']'
 ;
-
 expression:	
 		'(' expression ')'							{ 
 														$$ = $2;
@@ -149,13 +136,13 @@ expression:
 	|	expression binary_op expression %prec OP	{ 
 														$$ = (expression*) malloc(sizeof(char*));
 														$$->node = $2;
-														$$->expr1_t = $1;
-														$$->expr2_t = $3;
+														$$->expr1 = $1;
+														$$->expr2 = $3;
 													}
 	|	MOINS expression							{ 
 														$$ = (expression*) malloc(sizeof(char*));
 														$$->node = "-";
-														$$->expr2_t = $2;
+														$$->expr2 = $2;
 													}
 	|	CONSTANTE									{ 
 														$$ = (expression*) malloc(sizeof(char*));
@@ -164,8 +151,8 @@ expression:
 														$$->node=tmp;
 													}
 	|	variable									{  }
-	|	IDENTIFICATEUR '(' liste_expressions ')'	{ printf("%s", $1); }
-	
+	|	IDENTIFICATEUR '(' liste_expressions ')'	{  }
+	| 	retour_appel								{  }
 ; 
 
 liste_expressions:	
@@ -173,14 +160,12 @@ liste_expressions:
 	|	expression
 	| 
 ;
-
 condition:	
 		NOT '(' condition ')'
 	|	condition binary_rel condition %prec REL
 	|	'(' condition ')'
 	|	expression binary_comp expression
 ;
-
 binary_op:	
 		PLUS										{ $$ = "+"; }
 	|   MOINS										{ $$ = "-"; }
@@ -198,7 +183,6 @@ binary_rel:
 		LAND
 	|	LOR
 ;
-
 binary_comp:	
 		LT
 	|	GT
