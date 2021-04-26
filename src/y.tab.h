@@ -125,13 +125,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 24 "mongcc.y"
+#line 20 "mongcc.y"
 
 	char* name;
 	char* op;
 	char* type_var;
 	int entier;
-	struct _expression *expr_t;
+	struct _symbole *symbole;
 
 #line 137 "y.tab.h"
 

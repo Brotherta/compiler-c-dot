@@ -1,10 +1,6 @@
 %{
-	#include <stdlib.h>
-	#include <string.h>
-	#include <stdio.h>
 	#include "structure.h"
 	void yyerror(char *s);
-
 %}
 
 %token VOID INT FOR WHILE IF ELSE SWITCH CASE DEFAULT
@@ -26,23 +22,30 @@
 	char* op;
 	char* type_var;
 	int entier;
-	struct _expression *expr_t;
+	struct _symbole *symbole;
 }
 
 %token <name> IDENTIFICATEUR
 %token <entier> CONSTANTE
-%type <expr_t> expression
 %type <op> binary_op 
 %type <type_var> type
+%type <symbole> declarateur
+%type <symbole> liste_declarateurs
+%type <symbole> declaration
+%type <symbole> liste_declarations
 
 %%
 programme:
-		liste_declarations liste_fonctions		{}
+		liste_declarations liste_fonctions		{
+													printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
+												}
 ;
 
 liste_declarations:
-		liste_declarations declaration 			{}
-	|											{}
+		liste_declarations declaration 			{
+													$$ = ajouter($1, $2);
+												}
+	|											{ $$ = NULL; }
 ;
 
 liste_fonctions:
@@ -51,38 +54,41 @@ liste_fonctions:
 ;
 
 declaration:	
-		type liste_declarateurs ';'				{}
+		type liste_declarateurs ';'				{ $$ = fixer_type($2,$1);}
 ;
 
+
 liste_declarateurs:	
-		liste_declarateurs ',' declarateur		{}
-	|	declarateur								{}
+		liste_declarateurs ',' declarateur		{ 		
+													$$ = ajouter($1, $3);
+												}
+	|	declarateur								{ $$ = $1; }
 ;
 
 declarateur:	
-		IDENTIFICATEUR							{ printf("%s\n", $1); }
+		IDENTIFICATEUR							{ $$ = (symbole*) malloc(sizeof(char*)*4); $$->var_t=$1; }
 	|	declarateur '[' CONSTANTE ']'
 ;
 
 fonction:	
 		type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}'
-	|	EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' { printf("Extern "); }
+	|	EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' { /*printf("Extern ");*/ }
 ;
 
 type:	
-		VOID						{ $$ = "void"; }	
-	|	INT							{ $$ = "int"; }
+		VOID						{ $$ = "VOID";}	
+	|	INT							{ $$ = "INT"; }
 ;
 
 liste_parms:	
-		liste_parms ',' parm		{ printf("liste param "); }
-	|	parm						{ printf("un param "); }
-	| 								{printf("rien ");}
+		liste_parms ',' parm		{ }
+	|	parm						{ }
+	| 								{ }
 ;
 
 parm:	
-		INT IDENTIFICATEUR			{ printf("%s ", $2); }
-	|								{ printf("aucun param "); }
+		INT IDENTIFICATEUR			{ }
+	|								{ }
 ;
 
 liste_instructions:	
@@ -115,17 +121,17 @@ selection:
 saut:	
 		BREAK ';'
 	|	RETURN ';'									
-	|	RETURN expression ';'						{ printf("return \n"); }
+	|	RETURN expression ';'						{ }
 ;
 
 affectation:	
 		variable '=' expression						{ 
-														printf(" _%s %s %s %s %s_ ", 
+														/*printf(" _%s %s %s %s %s_ ", 
 																$3->expr1_t->expr1_t->node,
 																$3->expr1_t->node, 
 																$3->expr1_t->expr2_t->node,
 																$3->node, 
-																$3->expr2_t->node);
+																$3->expr2_t->node);*/
 													}
 ;
 
@@ -134,37 +140,37 @@ bloc:
 ;
 
 appel:	
-			IDENTIFICATEUR '(' liste_expressions ')' ';'	{ printf("appel function %s \n", $1); }	
+			IDENTIFICATEUR '(' liste_expressions ')' ';'	{ }	
 ;
 
 variable:	
-		IDENTIFICATEUR								{ printf("variable %s ", $1); }
+		IDENTIFICATEUR								{ /*printf("variable %s ", $1);*/ }
 	|	variable '[' expression ']'
 ;
 
 expression:	
 		'(' expression ')'							{ 
-														$$ = $2;
+														/*/*$$ = $2;*/
 													}
 	|	expression binary_op expression %prec OP	{ 
-														$$ = (expression*) malloc(sizeof(char*));
+														/*$$ = (expression*) malloc(sizeof(char*));
 														$$->node = $2;
 														$$->expr1_t = $1;
-														$$->expr2_t = $3;
+														$$->expr2_t = $3;*/
 													}
 	|	MOINS expression							{ 
-														$$ = (expression*) malloc(sizeof(char*));
+														/*$$ = (expression*) malloc(sizeof(char*));
 														$$->node = "-";
-														$$->expr2_t = $2;
+														$$->expr2_t = $2;*/
 													}
 	|	CONSTANTE									{ 
-														$$ = (expression*) malloc(sizeof(char*));
+														/*$$ = (expression*) malloc(sizeof(char*));
 														char *tmp = (char*) malloc(sizeof(char*));
 														sprintf(tmp,"%d",$1);
-														$$->node=tmp;
+														$$->node=tmp;*/
 													}
 	|	variable									{  }
-	|	IDENTIFICATEUR '(' liste_expressions ')'	{ printf("%s", $1); }
+	|	IDENTIFICATEUR '(' liste_expressions ')'	{ /*printf("%s", $1);*/ }
 	
 ; 
 
@@ -218,9 +224,8 @@ void yyerror(char *s)
 int main()
 {
 	//init_table();
-
+	
 	yyparse();
 	//creation_dot();
-	//TD6 MOTHER FUCKER BITCH LOOK AT THE TD6 !!!!!!!!
 	return 0;
 }
