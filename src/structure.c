@@ -31,10 +31,9 @@ void detruire_table()
 }
 
 arbre *creer_arbre(char *label, arbre *fils, arbre *frere)
-{//$$ = (symbole*) malloc(sizeof(char*)*4); $$->var_t=$1;
+{
     struct _arbre *nouvel_arbre = (arbre*) malloc(sizeof(arbre));
     nouvel_arbre->label=label;
-    //arbre->symbol_t=
     nouvel_arbre->frere_t=frere;
     nouvel_arbre->fils_t=fils;
     return nouvel_arbre;
@@ -57,9 +56,6 @@ void affichage_arbre(arbre *arbre)
         liste_frere = liste_frere->frere_t;
     }
 }
-
-// for(int i; cond ; incr)
-// $$=creer_arbre(for,$2,$3)
 
 void *ajouter_fils(arbre *actuel, arbre *fils) {
     actuel->fils_t = fils;
