@@ -848,12 +848,12 @@ YY_RULE_SETUP
 case 13:
 YY_RULE_SETUP
 #line 27 "mongcc.l"
-{ yylval.name = strdup(yytext); return IDENTIFICATEUR; }  // Variables
+{ yylval.label = strdup(yytext); return IDENTIFICATEUR; }  // Variables
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
 #line 28 "mongcc.l"
-{ yylval.entier = atoi(yytext); return CONSTANTE; }  // 
+{ yylval.label = strdup(yytext); return CONSTANTE; }  // 
 	YY_BREAK
 case 15:
 /* rule 15 can match eol */
@@ -863,153 +863,153 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 32 "mongcc.l"
+#line 33 "mongcc.l"
 { return RSHIFT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 33 "mongcc.l"
+#line 34 "mongcc.l"
 { return LSHIFT; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 34 "mongcc.l"
+#line 35 "mongcc.l"
 { return LAND; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 35 "mongcc.l"
+#line 36 "mongcc.l"
 { return BAND;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 36 "mongcc.l"
+#line 37 "mongcc.l"
 { return LOR; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 37 "mongcc.l"
+#line 38 "mongcc.l"
 { return BOR; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 38 "mongcc.l"
+#line 39 "mongcc.l"
 { return LEQ; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 39 "mongcc.l"
+#line 40 "mongcc.l"
 { return GEQ; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 40 "mongcc.l"
+#line 41 "mongcc.l"
 { return GT; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 41 "mongcc.l"
+#line 42 "mongcc.l"
 { return LT; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 42 "mongcc.l"
+#line 43 "mongcc.l"
 { return EQ; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 43 "mongcc.l"
+#line 44 "mongcc.l"
 { return NEQ; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 44 "mongcc.l"
+#line 45 "mongcc.l"
 { return '='; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 45 "mongcc.l"
+#line 46 "mongcc.l"
 { return '!'; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 46 "mongcc.l"
+#line 47 "mongcc.l"
 { return '{'; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 47 "mongcc.l"
+#line 48 "mongcc.l"
 { return '}'; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "mongcc.l"
+#line 49 "mongcc.l"
 { return ';';}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 49 "mongcc.l"
+#line 50 "mongcc.l"
 { return '('; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 50 "mongcc.l"
+#line 51 "mongcc.l"
 { return ')'; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 51 "mongcc.l"
+#line 52 "mongcc.l"
 { return '['; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 52 "mongcc.l"
+#line 53 "mongcc.l"
 { return ']'; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 53 "mongcc.l"
+#line 54 "mongcc.l"
 { return PLUS; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 54 "mongcc.l"
+#line 55 "mongcc.l"
 { return MUL ; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 55 "mongcc.l"
+#line 56 "mongcc.l"
 { return MOINS; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 56 "mongcc.l"
+#line 57 "mongcc.l"
 { return DIV; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 57 "mongcc.l"
+#line 58 "mongcc.l"
 { return ','; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 58 "mongcc.l"
+#line 59 "mongcc.l"
 { return ':'; }
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 59 "mongcc.l"
+#line 60 "mongcc.l"
 {} // on fait rien
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 60 "mongcc.l"
+#line 61 "mongcc.l"
 { yyerror(strdup(yytext)); }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 61 "mongcc.l"
+#line 62 "mongcc.l"
 ECHO;
 	YY_BREAK
 #line 1016 "lex.yy.c"
@@ -2017,7 +2017,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 61 "mongcc.l"
+#line 62 "mongcc.l"
 
 
 

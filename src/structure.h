@@ -13,27 +13,32 @@ Date derniere modif : 14/04/2021
 #define TAILLE = 103;
 
 
-/*
-typedef struct _arbre{
-	char* label;
+
+typedef struct _arbre {
+	char *label;
 	struct _symbole *symbol_t;
 	struct _arbre *frere_t;
 	struct _arbre *fils_t; // fils.label -> i  || +
 } arbre;
-*/
+
 
 typedef struct _symbole {
-	char* var_t;
-	char* type_t;
+	char *var_t;
+	char *type_t;
 	struct _symbole *suivant_t;
 } symbole;
 
 
 
-//_arbre *initialisation();
+arbre *creer_arbre(char *label, arbre *fils, arbre *frere);
 
-symbole *ajouter(symbole* actuel, symbole* suivant);
-symbole *fixer_type(symbole *actuel, char* type);
+void affichage_arbre(arbre *arbre);
+
+void *ajouter_fils(arbre *actuel, arbre *fils);
+void *ajouter_frere(arbre *actuel, arbre *frere);
+
+symbole *ajouter(symbole *actuel, symbole *suivant);
+symbole *fixer_type(symbole *actuel, char *type);
 
 #endif
 

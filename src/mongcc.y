@@ -18,26 +18,28 @@
 %start programme
 
 %union {
-	char* name;
-	char* op;
+	char* label;
 	char* type_var;
-	int entier;
 	struct _symbole *symbole;
+	struct _arbre *arbre;
 }
 
-%token <name> IDENTIFICATEUR
-%token <entier> CONSTANTE
-%type <op> binary_op 
-%type <type_var> type
-%type <symbole> declarateur
+%token <label> IDENTIFICATEUR
+%token <label> CONSTANTE
+%type <label> binary_op
+%type <type_var> type 
+%type <symbole> declarateur   
 %type <symbole> liste_declarateurs
-%type <symbole> declaration
 %type <symbole> liste_declarations
+%type <symbole> declaration
+%type <arbre> expression
+%type <arbre> variable
+
 
 %%
 programme:
 		liste_declarations liste_fonctions		{
-													printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
+													//printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
 												}
 ;
 
@@ -126,12 +128,12 @@ saut:
 
 affectation:	
 		variable '=' expression						{ 
-														/*printf(" _%s %s %s %s %s_ ", 
-																$3->expr1_t->expr1_t->node,
-																$3->expr1_t->node, 
-																$3->expr1_t->expr2_t->node,
-																$3->node, 
-																$3->expr2_t->node);*/
+														affichage_arbre($3);
+													/*	printf("%s = %s %s %s %s %s\n"
+														, $1->label, $3->fils_t->label, $3->label, $3->fils_t->frere_t->label
+														, $3->);*/
+														
+														//$1->label, $3->fils_t->label, $3->label, $3->fils_t->frere_t->label);
 													}
 ;
 
@@ -144,32 +146,25 @@ appel:
 ;
 
 variable:	
-		IDENTIFICATEUR								{ /*printf("variable %s ", $1);*/ }
-	|	variable '[' expression ']'
+		IDENTIFICATEUR								{ $$ = creer_arbre($1, NULL, NULL); }
+	|	variable '[' expression ']'					{}
 ;
 
 expression:	
 		'(' expression ')'							{ 
-														/*/*$$ = $2;*/
+														$$ = $2;
 													}
 	|	expression binary_op expression %prec OP	{ 
-														/*$$ = (expression*) malloc(sizeof(char*));
-														$$->node = $2;
-														$$->expr1_t = $1;
-														$$->expr2_t = $3;*/
+														ajouter_frere($1,$3);
+														$$ = creer_arbre($2,$1,NULL);
 													}
 	|	MOINS expression							{ 
-														/*$$ = (expression*) malloc(sizeof(char*));
-														$$->node = "-";
-														$$->expr2_t = $2;*/
+														$$ = creer_arbre("-", $2, NULL);
 													}
 	|	CONSTANTE									{ 
-														/*$$ = (expression*) malloc(sizeof(char*));
-														char *tmp = (char*) malloc(sizeof(char*));
-														sprintf(tmp,"%d",$1);
-														$$->node=tmp;*/
+														$$ = creer_arbre($1,NULL,NULL);
 													}
-	|	variable									{  }
+	|	variable									{ $$ = $1; }
 	|	IDENTIFICATEUR '(' liste_expressions ')'	{ /*printf("%s", $1);*/ }
 	
 ; 
@@ -223,8 +218,10 @@ void yyerror(char *s)
 
 int main()
 {
-	//init_table();
+	// nouvel=creer_arbre("a", creer_arbre("b",creer_arbre("e",NULL ,creer_arbre("f", creer_arbre("g",NULL ,NULL), NULL)) ,creer_arbre("c",NULL ,creer_arbre("d", NULL, NULL))), NULL);
+	//affichage_arbre(nouvel);
 	
+	//init_table();
 	yyparse();
 	//creation_dot();
 	return 0;

@@ -24,9 +24,10 @@ SEP                     [ \t\v\n\f]
 "break"                 { return BREAK; }
 "return"                { return RETURN; }                      // mot reservé  \\ 
 
-{L}({L}|{D})*           { yylval.name = strdup(yytext); return IDENTIFICATEUR; }  // Variables
-{D}+                    { yylval.entier = atoi(yytext); return CONSTANTE; }  // 
+{L}({L}|{D})*           { yylval.label = strdup(yytext); return IDENTIFICATEUR; }  // Variables
+{D}+                    { yylval.label = strdup(yytext); return CONSTANTE; }  // 
 "/*"({L}|{SEP}|{D})*"*/" {}
+
 
 
 ">>"                    { return RSHIFT; }

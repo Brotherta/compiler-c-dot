@@ -127,13 +127,12 @@ union YYSTYPE
 {
 #line 20 "mongcc.y"
 
-	char* name;
-	char* op;
+	char* label;
 	char* type_var;
-	int entier;
 	struct _symbole *symbole;
+	struct _arbre *arbre;
 
-#line 137 "y.tab.h"
+#line 136 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
