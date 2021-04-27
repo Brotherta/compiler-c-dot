@@ -79,10 +79,9 @@ extern int yydebug;
     NOT = 285,
     EXTERN = 286,
     THEN = 287,
-    OP = 288,
-    REL = 289,
-    IDENTIFICATEUR = 290,
-    CONSTANTE = 291
+    REL = 288,
+    IDENTIFICATEUR = 289,
+    CONSTANTE = 290
   };
 #endif
 /* Tokens.  */
@@ -116,23 +115,22 @@ extern int yydebug;
 #define NOT 285
 #define EXTERN 286
 #define THEN 287
-#define OP 288
-#define REL 289
-#define IDENTIFICATEUR 290
-#define CONSTANTE 291
+#define REL 288
+#define IDENTIFICATEUR 289
+#define CONSTANTE 290
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 20 "mongcc.y"
+#line 19 "mongcc.y"
 
 	char* label;
 	char* type_var;
 	struct _symbole *symbole;
 	struct _arbre *arbre;
 
-#line 136 "y.tab.h"
+#line 134 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

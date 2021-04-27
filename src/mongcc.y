@@ -13,7 +13,6 @@
 %left LAND LOR
 %nonassoc THEN
 %nonassoc ELSE
-%left OP
 %left REL
 %start programme
 
@@ -26,7 +25,6 @@
 
 %token <label> IDENTIFICATEUR
 %token <label> CONSTANTE
-%type <label> binary_op
 %type <type_var> type 
 %type <symbole> declarateur   
 %type <symbole> liste_declarateurs
@@ -38,10 +36,11 @@
 
 %%
 programme:
-		liste_declarations liste_fonctions		{
+		liste_declarations liste_fonctions		
+		{
 
-													//printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
-												}
+			//printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
+		}
 ;
 
 liste_declarations:
@@ -70,7 +69,7 @@ liste_fonctions:
 declaration:	
 		type liste_declarateurs ';'				
 		{
-				$$ = fixer_type($2,$1);
+			$$ = fixer_type($2,$1);
 		}
 ;
 
@@ -118,54 +117,123 @@ type:
 ;
 
 liste_parms:	
-		liste_parms ',' parm		{ }
-	|	parm						{ }
-	| 								{ }
+		liste_parms ',' parm		
+		{ 
+
+		}
+	|	parm						
+		{
+
+		}
+	| 								
+		{ 
+
+		}
 ;
 
 parm:	
-		INT IDENTIFICATEUR			{ }
-	|								{ }
+		INT IDENTIFICATEUR			
+		{ 
+
+		}
+	|								
+		{ 
+
+		}
 ;
 
 liste_instructions:	
 		liste_instructions instruction
-	|
+		{
+			// TODO
+		}
+	|	
+		{
+			// TODO
+		}
 ;
 
 instruction:	
 		iteration					
-	|	selection					{/* stock a la suite de ma precedente instruction*/}
+		{
+			//
+		}
+	|	selection
+		{
+			// TODO
+		}
 	|	saut
+		{
+			// TODO
+		}
 	|	affectation ';'
+		{
+			// TODO
+		}
 	|	bloc
-	|	appel						{/* enum CALL*/}
+		{
+			// TODO
+		}
+	|	appel
+		{
+			// TODO
+		}
 ;
 
 iteration:
 		FOR '(' affectation ';' condition ';' affectation ')' instruction
+		{
+			// TODO
+		}
 	|	WHILE '(' condition ')' instruction
+		{
+			// TODO
+		}
 ;
 
 selection:	
 		IF '(' condition ')' instruction %prec THEN
+		{
+			// TODO
+		}
 	|	IF '(' condition ')' instruction ELSE instruction
-	|	SWITCH '(' expression ')' instruction		{/* creer instruction switch*/}
-	|	CASE CONSTANTE ':' instruction				{/* cree instruction case */}
+		{
+			// TODO
+		}
+	|	SWITCH '(' expression ')' instruction
+		{
+			// TODO
+		}
+	|	CASE CONSTANTE ':' instruction
+		{
+			// TODO
+		}
 	|	DEFAULT ':' instruction
+		{
+			// TODO
+		}
 ;
 
 saut:	
 		BREAK ';'
-	|	RETURN ';'									
-	|	RETURN expression ';'						{ }
+		{
+			// TODO
+		}
+	|	RETURN ';'
+		{
+			// TODO
+		}									
+	|	RETURN expression ';'
+		{
+			// TODO
+		}
 ;
 
 affectation:	
 		variable '=' expression						
 		{ 
 			rechercher_symbole($1->label);
-			//affichage_arbre($3);
+			affichage_arbre($3);
 		}
 ;
 
@@ -178,10 +246,10 @@ bloc:
 ;
 
 appel:	
-			IDENTIFICATEUR '(' liste_expressions ')' ';'	
-			{ 
-
-			}	
+		IDENTIFICATEUR '(' liste_expressions ')' ';'	
+		{ 
+			
+		}	
 ;
 
 variable:	
@@ -196,58 +264,97 @@ variable:
 ;
 
 expression:	
-		'(' expression ')'							
-		{ 												
-			$$ = $2;
-		}
-	|	expression binary_op expression %prec OP	
-	    { 
+		'(' expression ')' 		 {$$ = $2;}			
+ 	|	expression PLUS expression 		
+	 	{ 
 			ajouter_frere($1,$3);
-			$$ = creer_arbre($2,$1,NULL);
+			$$ = creer_arbre("+",$1,NULL);
 		}
-	|	MOINS expression							
+	|	expression MOINS expression	
+		{ 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre("-",$1,NULL);
+		}			
+	|	expression DIV expression	
+		{ 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre("/",$1,NULL);
+		}			
+	|	expression MUL expression				
+		{ 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre("*",$1,NULL);
+		}
+	|	expression RSHIFT expression
+		{ 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre(">>",$1,NULL);
+		}				
+	|	expression LSHIFT expression
+		{ 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre("<<",$1,NULL);
+		}				
+	|	expression BAND expression	
+		{ 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre("&",$1,NULL);
+		}			
+	|	expression BOR expression	
+		{ 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre("|",$1,NULL);
+		}			
+	|	MOINS expression %prec MUL	
 		{ 
 			$$ = creer_arbre("-", $2, NULL);
-		}
-	|	CONSTANTE									
+		}			
+	|	CONSTANTE 	
 		{ 
 			$$ = creer_arbre($1,NULL,NULL);
-		}
-	|	variable									
+		}				
+	|	variable 	
 		{ 
 			$$ = $1; 
-		}
-	|	IDENTIFICATEUR '(' liste_expressions ')'	
+		}					
+	|	IDENTIFICATEUR '(' liste_expressions ')' 
 		{ 
 			/*printf("%s", $1);*/ 
 		}
-	
-; 
+;
 
 liste_expressions:	
 		liste_expressions ',' expression
+		{
+			// TODO
+		}
 	|	expression
+		{
+			// TODO
+		}
 	| 
+		{
+			// TODO
+		}
 ;
 
 condition:	
 		NOT '(' condition ')'
+		{
+			// TODO
+		}
 	|	condition binary_rel condition %prec REL
+		{
+			// TODO
+		}
 	|	'(' condition ')'
+		{
+			// TODO
+		}
 	|	expression binary_comp expression
-;
-
-binary_op:	
-		PLUS										{ $$ = "+"; }
-	|   MOINS										{ $$ = "-"; }
-	|	MUL											{ $$ = "*"; }
-	|	DIV											{ $$ = "/"; }
-	|   LSHIFT										{ $$ = "<<"; }
-	|   RSHIFT										{ $$ = ">>"; }
-	|	LAND										{ $$ = "&&"; }
-	|	LOR											{ $$ = "||"; }
-	|	BAND										{ $$ = "&"; }
-	|	BOR											{ $$ = "|"; }
+		{
+			// TODO
+		}
 ;
 
 binary_rel:	

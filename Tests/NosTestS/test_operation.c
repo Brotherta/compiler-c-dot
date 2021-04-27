@@ -1,3 +1,3 @@
 int main() {
-    a = 1 + 2- 3;
+    toto = x >> y - z / t * 6;
 }
