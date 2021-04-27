@@ -60,7 +60,7 @@ liste_fonctions:
 		{
 			
 		}
-|       fonction								
+	|	fonction								
 		{
 			
 		}
