@@ -1,6 +1,34 @@
 #include "structure.h"
 
+int ACC = 0;
 
+void nouvelle_adresse()
+{
+    // TODO realloc TABLE quand ACC == TAILLE -1
+    while (TABLE[ACC] != NULL) 
+    {
+        ACC++;
+    }
+    if (ACC > 0) 
+    {
+        printf("copie ! \n");
+        TABLE[ACC] = copie_symbole(TABLE[ACC-1]);
+    }
+}
+
+symbole *copie_symbole(symbole *a_copier) {
+    struct _symbole *copie = (symbole*) malloc(sizeof(symbole));
+    copie->var_t = a_copier->var_t;
+    copie->type_t = a_copier->type_t;
+    copie->suivant_t = a_copier->suivant_t;
+    return copie;
+}
+
+void detruire_table()
+{
+    TABLE[ACC]=NULL;
+    ACC--;
+}
 
 arbre *creer_arbre(char *label, arbre *fils, arbre *frere)
 {//$$ = (symbole*) malloc(sizeof(char*)*4); $$->var_t=$1;
@@ -42,7 +70,7 @@ void *ajouter_frere(arbre *actuel, arbre *frere) {
 }
 
 
-symbole *ajouter(symbole *actuel, symbole *futur) {
+symbole *ajouter_symbole(symbole *actuel, symbole *futur) {
     if (actuel == NULL) {
         return futur; // correspond a créé une table de symbole a partir de rien et d'un suivant
     }
@@ -70,4 +98,17 @@ symbole *fixer_type(symbole *actuel, char *type)
 
     courant->type_t = type;
     return actuel;
+}
+
+void rechercher_symbole(char *label)
+{
+    struct _symbole *courant = TABLE[ACC];
+    while(courant != NULL) {
+        if (!strcmp(courant->var_t,label)) {
+            printf("%s bien défini !\n", label);
+            return;
+        }
+        courant=courant->suivant_t;
+    }
+    printf("%s : pas defini !\n",label);
 }

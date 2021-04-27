@@ -1,6 +1,3 @@
-
 int main() {
-  i = - (x + y) + 2;
+    a = 1 + 2- 3;
 }
-je te laisse le liveshare
-envoie sur github desfois que sa crash

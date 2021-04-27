@@ -10,9 +10,7 @@ Date derniere modif : 14/04/2021
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#define TAILLE = 103;
-
-
+#define TAILLE 103
 
 typedef struct _arbre {
 	char *label;
@@ -29,6 +27,11 @@ typedef struct _symbole {
 } symbole;
 
 
+struct symbole *TABLE[TAILLE];
+int ACC;
+
+void nouvelle_adresse();
+void detruire_table();
 
 arbre *creer_arbre(char *label, arbre *fils, arbre *frere);
 
@@ -37,9 +40,10 @@ void affichage_arbre(arbre *arbre);
 void *ajouter_fils(arbre *actuel, arbre *fils);
 void *ajouter_frere(arbre *actuel, arbre *frere);
 
-symbole *ajouter(symbole *actuel, symbole *suivant);
+symbole *ajouter_symbole(symbole *actuel, symbole *suivant);
 symbole *fixer_type(symbole *actuel, char *type);
-
+symbole *copie_symbole(symbole *a_copier);
+void rechercher_symbole(char *label);
 #endif
 
 /*

@@ -39,47 +39,82 @@
 %%
 programme:
 		liste_declarations liste_fonctions		{
+
 													//printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
 												}
 ;
 
 liste_declarations:
-		liste_declarations declaration 			{
-													$$ = ajouter($1, $2);
-												}
-	|											{ $$ = NULL; }
+		liste_declarations declaration 			
+		{							
+			TABLE[ACC] = ajouter_symbole(TABLE[ACC], $2);
+		}
+	|										
+		{  
+			nouvelle_adresse(); 
+			//printf("nouvelle décl %d\n",ACC);
+		}
 ;
 
 liste_fonctions:
-		liste_fonctions fonction				{}
-|       fonction								{}
+		liste_fonctions fonction				
+		{
+			
+		}
+|       fonction								
+		{
+			
+		}
 ;
 
 declaration:	
-		type liste_declarateurs ';'				{ $$ = fixer_type($2,$1);}
+		type liste_declarateurs ';'				
+		{
+				$$ = fixer_type($2,$1);
+		}
 ;
 
 
 liste_declarateurs:	
-		liste_declarateurs ',' declarateur		{ 		
-													$$ = ajouter($1, $3);
-												}
-	|	declarateur								{ $$ = $1; }
+		liste_declarateurs ',' declarateur		
+		{ 		
+			$$ = ajouter_symbole($1, $3);
+		}
+	|	declarateur								
+		{ 
+			$$ = $1; 
+		}
 ;
 
 declarateur:	
-		IDENTIFICATEUR							{ $$ = (symbole*) malloc(sizeof(char*)*4); $$->var_t=$1; }
+		IDENTIFICATEUR							
+		{ 
+			$$ = (symbole*) malloc(sizeof(char*)*4); $$->var_t=$1; 
+		}
 	|	declarateur '[' CONSTANTE ']'
 ;
 
 fonction:	
-		type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}'
-	|	EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' { /*printf("Extern ");*/ }
+		type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}' 	
+		{ 
+			detruire_table();
+			//printf("sorti fonction : %d\n",ACC);
+		}
+	|	EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' 
+		{ 
+			
+		}
 ;
 
 type:	
-		VOID						{ $$ = "VOID";}	
-	|	INT							{ $$ = "INT"; }
+		VOID						
+		{ 
+			$$ = "VOID";
+		}	
+	|	INT							
+		{ 
+			$$ = "INT"; 
+		}
 ;
 
 liste_parms:	
@@ -127,45 +162,65 @@ saut:
 ;
 
 affectation:	
-		variable '=' expression						{ 
-														affichage_arbre($3);
-													/*	printf("%s = %s %s %s %s %s\n"
-														, $1->label, $3->fils_t->label, $3->label, $3->fils_t->frere_t->label
-														, $3->);*/
-														
-														//$1->label, $3->fils_t->label, $3->label, $3->fils_t->frere_t->label);
-													}
+		variable '=' expression						
+		{ 
+			rechercher_symbole($1->label);
+			//affichage_arbre($3);
+		}
 ;
 
 bloc:	
-		'{' liste_declarations liste_instructions '}'
+		'{' liste_declarations liste_instructions '}' 	
+		{ 										
+			detruire_table();
+			//printf("sorti bloc : %d\n", ACC);
+		}
 ;
 
 appel:	
-			IDENTIFICATEUR '(' liste_expressions ')' ';'	{ }	
+			IDENTIFICATEUR '(' liste_expressions ')' ';'	
+			{ 
+
+			}	
 ;
 
 variable:	
-		IDENTIFICATEUR								{ $$ = creer_arbre($1, NULL, NULL); }
-	|	variable '[' expression ']'					{}
+		IDENTIFICATEUR								
+		{
+			 $$ = creer_arbre($1, NULL, NULL); 
+		}
+	|	variable '[' expression ']'					
+		{
+
+		}
 ;
 
 expression:	
-		'(' expression ')'							{ 
-														$$ = $2;
-													}
-	|	expression binary_op expression %prec OP	{ 
-														ajouter_frere($1,$3);
-														$$ = creer_arbre($2,$1,NULL);
-													}
-	|	MOINS expression							{ 
-														$$ = creer_arbre("-", $2, NULL);
-													}
-	|	CONSTANTE									{ 
-														$$ = creer_arbre($1,NULL,NULL);
-													}
-	|	variable									{ $$ = $1; }
-	|	IDENTIFICATEUR '(' liste_expressions ')'	{ /*printf("%s", $1);*/ }
+		'(' expression ')'							
+		{ 												
+			$$ = $2;
+		}
+	|	expression binary_op expression %prec OP	
+	    { 
+			ajouter_frere($1,$3);
+			$$ = creer_arbre($2,$1,NULL);
+		}
+	|	MOINS expression							
+		{ 
+			$$ = creer_arbre("-", $2, NULL);
+		}
+	|	CONSTANTE									
+		{ 
+			$$ = creer_arbre($1,NULL,NULL);
+		}
+	|	variable									
+		{ 
+			$$ = $1; 
+		}
+	|	IDENTIFICATEUR '(' liste_expressions ')'	
+		{ 
+			/*printf("%s", $1);*/ 
+		}
 	
 ; 
 
@@ -222,6 +277,7 @@ int main()
 	//affichage_arbre(nouvel);
 	
 	//init_table();
+
 	yyparse();
 	//creation_dot();
 	return 0;
