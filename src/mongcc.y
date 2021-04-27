@@ -45,8 +45,9 @@ programme:
 
 liste_declarations:
 		liste_declarations declaration 			
-		{							
+		{			
 			TABLE[ACC] = ajouter_symbole(TABLE[ACC], $2);
+			struct _symbole *tmp = TABLE[ACC];	
 		}
 	|										
 		{  

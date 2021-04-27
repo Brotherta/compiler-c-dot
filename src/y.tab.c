@@ -579,14 +579,14 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    39,    39,    46,    51,    58,    62,    69,    77,    81,
-      88,    92,    96,   101,   108,   112,   119,   120,   121,   125,
-     126,   130,   131,   135,   136,   137,   138,   139,   140,   144,
-     145,   149,   150,   151,   152,   153,   157,   158,   159,   163,
-     171,   179,   186,   190,   197,   198,   203,   208,   213,   218,
-     223,   228,   233,   238,   242,   246,   250,   257,   258,   259,
-     263,   264,   265,   266,   270,   271,   275,   276,   277,   278,
-     279,   280
+       0,    39,    39,    47,    53,    60,    64,    71,    79,    83,
+      90,    94,    98,   103,   110,   114,   121,   125,   130,   136,
+     141,   147,   152,   158,   162,   166,   170,   174,   178,   185,
+     189,   196,   200,   204,   208,   212,   219,   223,   227,   234,
+     242,   250,   257,   261,   268,   269,   274,   279,   284,   289,
+     294,   299,   304,   309,   313,   317,   321,   328,   332,   337,
+     343,   347,   351,   355,   362,   363,   367,   368,   369,   370,
+     371,   372
 };
 #endif
 
@@ -1499,326 +1499,507 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 39 "mongcc.y"
-                                                                {
+#line 40 "mongcc.y"
+                {
 
-													//printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
-												}
+			//printf("%s %s %s %s %s %s", $1->type_t, $1->var_t, $1->suivant_t->type_t, $1->suivant_t->var_t, $1->suivant_t->suivant_t->type_t, $1->suivant_t->suivant_t->var_t); 
+		}
 #line 1508 "y.tab.c"
     break;
 
   case 3:
-#line 47 "mongcc.y"
-                {							
+#line 48 "mongcc.y"
+                {			
 			TABLE[ACC] = ajouter_symbole(TABLE[ACC], (yyvsp[0].symbole));
+			struct _symbole *tmp = TABLE[ACC];	
 		}
-#line 1516 "y.tab.c"
+#line 1517 "y.tab.c"
     break;
 
   case 4:
-#line 51 "mongcc.y"
+#line 53 "mongcc.y"
                 {  
 			nouvelle_adresse(); 
 			//printf("nouvelle décl %d\n",ACC);
 		}
-#line 1525 "y.tab.c"
+#line 1526 "y.tab.c"
     break;
 
   case 5:
-#line 59 "mongcc.y"
+#line 61 "mongcc.y"
                 {
 			
 		}
-#line 1533 "y.tab.c"
+#line 1534 "y.tab.c"
     break;
 
   case 6:
-#line 63 "mongcc.y"
+#line 65 "mongcc.y"
                 {
 			
 		}
-#line 1541 "y.tab.c"
+#line 1542 "y.tab.c"
     break;
 
   case 7:
-#line 70 "mongcc.y"
+#line 72 "mongcc.y"
                 {
-				(yyval.symbole) = fixer_type((yyvsp[-1].symbole),(yyvsp[-2].type_var));
+			(yyval.symbole) = fixer_type((yyvsp[-1].symbole),(yyvsp[-2].type_var));
 		}
-#line 1549 "y.tab.c"
+#line 1550 "y.tab.c"
     break;
 
   case 8:
-#line 78 "mongcc.y"
+#line 80 "mongcc.y"
                 { 		
 			(yyval.symbole) = ajouter_symbole((yyvsp[-2].symbole), (yyvsp[0].symbole));
 		}
-#line 1557 "y.tab.c"
+#line 1558 "y.tab.c"
     break;
 
   case 9:
-#line 82 "mongcc.y"
+#line 84 "mongcc.y"
                 { 
 			(yyval.symbole) = (yyvsp[0].symbole); 
 		}
-#line 1565 "y.tab.c"
+#line 1566 "y.tab.c"
     break;
 
   case 10:
-#line 89 "mongcc.y"
+#line 91 "mongcc.y"
                 { 
 			(yyval.symbole) = (symbole*) malloc(sizeof(char*)*4); (yyval.symbole)->var_t=(yyvsp[0].label); 
 		}
-#line 1573 "y.tab.c"
+#line 1574 "y.tab.c"
     break;
 
   case 12:
-#line 97 "mongcc.y"
+#line 99 "mongcc.y"
                 { 
 			detruire_table();
 			//printf("sorti fonction : %d\n",ACC);
 		}
-#line 1582 "y.tab.c"
+#line 1583 "y.tab.c"
     break;
 
   case 13:
-#line 102 "mongcc.y"
+#line 104 "mongcc.y"
                 { 
 			
 		}
-#line 1590 "y.tab.c"
+#line 1591 "y.tab.c"
     break;
 
   case 14:
-#line 109 "mongcc.y"
+#line 111 "mongcc.y"
                 { 
 			(yyval.type_var) = "VOID";
 		}
-#line 1598 "y.tab.c"
+#line 1599 "y.tab.c"
     break;
 
   case 15:
-#line 113 "mongcc.y"
+#line 115 "mongcc.y"
                 { 
 			(yyval.type_var) = "INT"; 
 		}
-#line 1606 "y.tab.c"
+#line 1607 "y.tab.c"
     break;
 
   case 16:
-#line 119 "mongcc.y"
-                                                { }
-#line 1612 "y.tab.c"
+#line 122 "mongcc.y"
+                { 
+
+		}
+#line 1615 "y.tab.c"
     break;
 
   case 17:
-#line 120 "mongcc.y"
-                                                                { }
-#line 1618 "y.tab.c"
+#line 126 "mongcc.y"
+                {
+
+		}
+#line 1623 "y.tab.c"
     break;
 
   case 18:
-#line 121 "mongcc.y"
-                                                                        { }
-#line 1624 "y.tab.c"
+#line 130 "mongcc.y"
+                { 
+
+		}
+#line 1631 "y.tab.c"
     break;
 
   case 19:
-#line 125 "mongcc.y"
-                                                        { }
-#line 1630 "y.tab.c"
+#line 137 "mongcc.y"
+                { 
+
+		}
+#line 1639 "y.tab.c"
     break;
 
   case 20:
-#line 126 "mongcc.y"
-                                                                        { }
-#line 1636 "y.tab.c"
+#line 141 "mongcc.y"
+                { 
+
+		}
+#line 1647 "y.tab.c"
+    break;
+
+  case 21:
+#line 148 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1655 "y.tab.c"
+    break;
+
+  case 22:
+#line 152 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1663 "y.tab.c"
+    break;
+
+  case 23:
+#line 159 "mongcc.y"
+                {
+			//
+		}
+#line 1671 "y.tab.c"
     break;
 
   case 24:
-#line 136 "mongcc.y"
-                                                                {/* stock a la suite de ma precedente instruction*/}
-#line 1642 "y.tab.c"
+#line 163 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1679 "y.tab.c"
+    break;
+
+  case 25:
+#line 167 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1687 "y.tab.c"
+    break;
+
+  case 26:
+#line 171 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1695 "y.tab.c"
+    break;
+
+  case 27:
+#line 175 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1703 "y.tab.c"
     break;
 
   case 28:
-#line 140 "mongcc.y"
-                                                                {/* enum CALL*/}
-#line 1648 "y.tab.c"
+#line 179 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1711 "y.tab.c"
+    break;
+
+  case 29:
+#line 186 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1719 "y.tab.c"
+    break;
+
+  case 30:
+#line 190 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1727 "y.tab.c"
+    break;
+
+  case 31:
+#line 197 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1735 "y.tab.c"
+    break;
+
+  case 32:
+#line 201 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1743 "y.tab.c"
     break;
 
   case 33:
-#line 151 "mongcc.y"
-                                                                {/* creer instruction switch*/}
-#line 1654 "y.tab.c"
+#line 205 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1751 "y.tab.c"
     break;
 
   case 34:
-#line 152 "mongcc.y"
-                                                                        {/* cree instruction case */}
-#line 1660 "y.tab.c"
-    break;
-
-  case 38:
-#line 159 "mongcc.y"
-                                                                                { }
-#line 1666 "y.tab.c"
-    break;
-
-  case 39:
-#line 164 "mongcc.y"
-                { 
-			rechercher_symbole((yyvsp[-2].arbre)->label);
-			affichage_arbre((yyvsp[0].arbre));
-		}
-#line 1675 "y.tab.c"
-    break;
-
-  case 40:
-#line 172 "mongcc.y"
-                { 										
-			detruire_table();
-			//printf("sorti bloc : %d\n", ACC);
-		}
-#line 1684 "y.tab.c"
-    break;
-
-  case 41:
-#line 180 "mongcc.y"
-                        { 
-
-			}
-#line 1692 "y.tab.c"
-    break;
-
-  case 42:
-#line 187 "mongcc.y"
-                {
-			 (yyval.arbre) = creer_arbre((yyvsp[0].label), NULL, NULL); 
-		}
-#line 1700 "y.tab.c"
-    break;
-
-  case 43:
-#line 191 "mongcc.y"
-                {
-
-		}
-#line 1708 "y.tab.c"
-    break;
-
-  case 44:
-#line 197 "mongcc.y"
-                                                 {(yyval.arbre) = (yyvsp[-1].arbre);}
-#line 1714 "y.tab.c"
-    break;
-
-  case 45:
-#line 199 "mongcc.y"
-                { 
-			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
-			(yyval.arbre) = creer_arbre("+",(yyvsp[-2].arbre),NULL);
-		}
-#line 1723 "y.tab.c"
-    break;
-
-  case 46:
-#line 204 "mongcc.y"
-                { 
-			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
-			(yyval.arbre) = creer_arbre("-",(yyvsp[-2].arbre),NULL);
-		}
-#line 1732 "y.tab.c"
-    break;
-
-  case 47:
 #line 209 "mongcc.y"
-                { 
-			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
-			(yyval.arbre) = creer_arbre("/",(yyvsp[-2].arbre),NULL);
-		}
-#line 1741 "y.tab.c"
-    break;
-
-  case 48:
-#line 214 "mongcc.y"
-                { 
-			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
-			(yyval.arbre) = creer_arbre("*",(yyvsp[-2].arbre),NULL);
-		}
-#line 1750 "y.tab.c"
-    break;
-
-  case 49:
-#line 219 "mongcc.y"
-                { 
-			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
-			(yyval.arbre) = creer_arbre(">>",(yyvsp[-2].arbre),NULL);
+                {
+			// TODO
 		}
 #line 1759 "y.tab.c"
     break;
 
-  case 50:
+  case 35:
+#line 213 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1767 "y.tab.c"
+    break;
+
+  case 36:
+#line 220 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1775 "y.tab.c"
+    break;
+
+  case 37:
 #line 224 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1783 "y.tab.c"
+    break;
+
+  case 38:
+#line 228 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1791 "y.tab.c"
+    break;
+
+  case 39:
+#line 235 "mongcc.y"
+                { 
+			rechercher_symbole((yyvsp[-2].arbre)->label);
+			affichage_arbre((yyvsp[0].arbre));
+		}
+#line 1800 "y.tab.c"
+    break;
+
+  case 40:
+#line 243 "mongcc.y"
+                { 										
+			detruire_table();
+			//printf("sorti bloc : %d\n", ACC);
+		}
+#line 1809 "y.tab.c"
+    break;
+
+  case 41:
+#line 251 "mongcc.y"
+                { 
+			
+		}
+#line 1817 "y.tab.c"
+    break;
+
+  case 42:
+#line 258 "mongcc.y"
+                {
+			 (yyval.arbre) = creer_arbre((yyvsp[0].label), NULL, NULL); 
+		}
+#line 1825 "y.tab.c"
+    break;
+
+  case 43:
+#line 262 "mongcc.y"
+                {
+
+		}
+#line 1833 "y.tab.c"
+    break;
+
+  case 44:
+#line 268 "mongcc.y"
+                                                 {(yyval.arbre) = (yyvsp[-1].arbre);}
+#line 1839 "y.tab.c"
+    break;
+
+  case 45:
+#line 270 "mongcc.y"
+                { 
+			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
+			(yyval.arbre) = creer_arbre("+",(yyvsp[-2].arbre),NULL);
+		}
+#line 1848 "y.tab.c"
+    break;
+
+  case 46:
+#line 275 "mongcc.y"
+                { 
+			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
+			(yyval.arbre) = creer_arbre("-",(yyvsp[-2].arbre),NULL);
+		}
+#line 1857 "y.tab.c"
+    break;
+
+  case 47:
+#line 280 "mongcc.y"
+                { 
+			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
+			(yyval.arbre) = creer_arbre("/",(yyvsp[-2].arbre),NULL);
+		}
+#line 1866 "y.tab.c"
+    break;
+
+  case 48:
+#line 285 "mongcc.y"
+                { 
+			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
+			(yyval.arbre) = creer_arbre("*",(yyvsp[-2].arbre),NULL);
+		}
+#line 1875 "y.tab.c"
+    break;
+
+  case 49:
+#line 290 "mongcc.y"
+                { 
+			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
+			(yyval.arbre) = creer_arbre(">>",(yyvsp[-2].arbre),NULL);
+		}
+#line 1884 "y.tab.c"
+    break;
+
+  case 50:
+#line 295 "mongcc.y"
                 { 
 			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 			(yyval.arbre) = creer_arbre("<<",(yyvsp[-2].arbre),NULL);
 		}
-#line 1768 "y.tab.c"
+#line 1893 "y.tab.c"
     break;
 
   case 51:
-#line 229 "mongcc.y"
+#line 300 "mongcc.y"
                 { 
 			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 			(yyval.arbre) = creer_arbre("&",(yyvsp[-2].arbre),NULL);
 		}
-#line 1777 "y.tab.c"
+#line 1902 "y.tab.c"
     break;
 
   case 52:
-#line 234 "mongcc.y"
+#line 305 "mongcc.y"
                 { 
 			ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 			(yyval.arbre) = creer_arbre("|",(yyvsp[-2].arbre),NULL);
 		}
-#line 1786 "y.tab.c"
+#line 1911 "y.tab.c"
     break;
 
   case 53:
-#line 239 "mongcc.y"
+#line 310 "mongcc.y"
                 { 
 			(yyval.arbre) = creer_arbre("-", (yyvsp[0].arbre), NULL);
 		}
-#line 1794 "y.tab.c"
+#line 1919 "y.tab.c"
     break;
 
   case 54:
-#line 243 "mongcc.y"
+#line 314 "mongcc.y"
                 { 
 			(yyval.arbre) = creer_arbre((yyvsp[0].label),NULL,NULL);
 		}
-#line 1802 "y.tab.c"
+#line 1927 "y.tab.c"
     break;
 
   case 55:
-#line 247 "mongcc.y"
+#line 318 "mongcc.y"
                 { 
 			(yyval.arbre) = (yyvsp[0].arbre); 
 		}
-#line 1810 "y.tab.c"
+#line 1935 "y.tab.c"
     break;
 
   case 56:
-#line 251 "mongcc.y"
+#line 322 "mongcc.y"
                 { 
 			/*printf("%s", $1);*/ 
 		}
-#line 1818 "y.tab.c"
+#line 1943 "y.tab.c"
+    break;
+
+  case 57:
+#line 329 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1951 "y.tab.c"
+    break;
+
+  case 58:
+#line 333 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1959 "y.tab.c"
+    break;
+
+  case 59:
+#line 337 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1967 "y.tab.c"
+    break;
+
+  case 60:
+#line 344 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1975 "y.tab.c"
+    break;
+
+  case 61:
+#line 348 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1983 "y.tab.c"
+    break;
+
+  case 62:
+#line 352 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1991 "y.tab.c"
+    break;
+
+  case 63:
+#line 356 "mongcc.y"
+                {
+			// TODO
+		}
+#line 1999 "y.tab.c"
     break;
 
 
-#line 1822 "y.tab.c"
+#line 2003 "y.tab.c"
 
       default: break;
     }
@@ -2050,7 +2231,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 283 "mongcc.y"
+#line 375 "mongcc.y"
 
 
 void yyerror(char *s)

@@ -9,19 +9,6 @@ void nouvelle_adresse()
     {
         ACC++;
     }
-    if (ACC > 0) 
-    {
-        printf("copie ! \n");
-        TABLE[ACC] = copie_symbole(TABLE[ACC-1]);
-    }
-}
-
-symbole *copie_symbole(symbole *a_copier) {
-    struct _symbole *copie = (symbole*) malloc(sizeof(symbole));
-    copie->var_t = a_copier->var_t;
-    copie->type_t = a_copier->type_t;
-    copie->suivant_t = a_copier->suivant_t;
-    return copie;
 }
 
 void detruire_table()
@@ -98,13 +85,17 @@ symbole *fixer_type(symbole *actuel, char *type)
 
 void rechercher_symbole(char *label)
 {
-    struct _symbole *courant = TABLE[ACC];
-    while(courant != NULL) {
-        if (!strcmp(courant->var_t,label)) {
-            printf("%s bien défini !\n", label);
-            return;
+    int ACC_copie = ACC;
+    while(ACC_copie >= 0) {
+        struct _symbole *courant = TABLE[ACC_copie];
+        while(courant != NULL) {
+            if (!strcmp(courant->var_t,label)) {
+                printf("%s : bien défini !\n", label);
+                return;
+            }
+            courant=courant->suivant_t;
         }
-        courant=courant->suivant_t;
+        ACC_copie--;
     }
     printf("%s : pas defini !\n",label);
 }
