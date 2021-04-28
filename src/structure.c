@@ -17,6 +17,11 @@ void detruire_table()
     ACC--;
 }
 
+void detruire_table_fonction() {
+    detruire_table();
+    detruire_table();
+}
+
 arbre *creer_arbre(char *label, arbre *fils, arbre *frere)
 {
     struct _arbre *nouvel_arbre = (arbre*) malloc(sizeof(arbre));
@@ -49,7 +54,20 @@ void *ajouter_fils(arbre *actuel, arbre *fils) {
 }
 
 void *ajouter_frere(arbre *actuel, arbre *frere) {
-    actuel->frere_t = frere;
+    struct _arbre *frere_courant = actuel;//->frere_t;
+
+    while(frere_courant->frere_t != NULL) {
+        frere_courant = frere_courant->frere_t;
+    }
+
+    frere_courant->frere_t = frere;
+}
+
+symbole *creer_symbole(char* var_t, char *type_t) {
+    struct _symbole *nouveau_symbole = (symbole*) malloc(sizeof(symbole));
+    nouveau_symbole->var_t=var_t;
+    nouveau_symbole->type_t=type_t;
+    return nouveau_symbole;
 }
 
 
@@ -90,12 +108,12 @@ void rechercher_symbole(char *label)
         struct _symbole *courant = TABLE[ACC_copie];
         while(courant != NULL) {
             if (!strcmp(courant->var_t,label)) {
-                printf("%s : bien défini !\n", label);
+                printf("%s : bien défini ! ACC = %d \n", label, ACC_copie);
                 return;
             }
             courant=courant->suivant_t;
         }
         ACC_copie--;
     }
-    printf("%s : pas defini !\n",label);
+    printf("%s : pas defini ! ACC = %d \n",label, ACC_copie);
 }

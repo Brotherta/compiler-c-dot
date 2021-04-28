@@ -32,6 +32,7 @@ int ACC;
 
 void nouvelle_adresse();
 void detruire_table();
+void detruire_table_fonction();
 
 arbre *creer_arbre(char *label, arbre *fils, arbre *frere);
 
@@ -40,7 +41,9 @@ void affichage_arbre(arbre *arbre);
 void *ajouter_fils(arbre *actuel, arbre *fils);
 void *ajouter_frere(arbre *actuel, arbre *frere);
 
+symbole *creer_symbole(char* var_t, char *type_t);
 symbole *ajouter_symbole(symbole *actuel, symbole *suivant);
+
 symbole *fixer_type(symbole *actuel, char *type);
 symbole *copie_symbole(symbole *a_copier);
 void rechercher_symbole(char *label);

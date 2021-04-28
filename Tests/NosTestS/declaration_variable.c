@@ -1,24 +1,18 @@
-int toto;
+int toto; 
 
-int main() {
-    
-    if (1==1) 
-    {
-        int a, b;
-        toto = 1;
-        if (1==1) 
-        {
-            int z;
-            toto = 1;
-            a = 1;
-            z = 1;
-        }
-        toto = 1;
-        a = 1;
-        z = 1;
-    }
-    toto = 1;
-    a = 1;
-    z = 1;
-    return 0;
+int fact(int a,int b){ 
+    toto = 0;
+    a = 0;
+    b = 0;
+    f = 0;
+}
+
+int main() { 
+    int c;
+    blabla = 1;
+    toto = 0;
+    fact = 1;
+    a = 0;
+    b = 0;
+    f = 0;
 }
