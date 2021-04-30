@@ -22,9 +22,10 @@ void detruire_table_fonction() {
     detruire_table();
 }
 
-arbre *creer_arbre(char *label, arbre *fils, arbre *frere)
+arbre *creer_arbre(char *label, arbre *fils, arbre *frere, enum type_arbre mon_mon)
 {
     struct _arbre *nouvel_arbre = (arbre*) malloc(sizeof(arbre));
+    nouvel_arbre->type_arbre_t = mon_mon;
     nouvel_arbre->label=label;
     nouvel_arbre->frere_t=frere;
     nouvel_arbre->fils_t=fils;
