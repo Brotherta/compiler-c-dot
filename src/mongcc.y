@@ -1,5 +1,6 @@
 %{
-	#include "structure.h"
+	#include "dot/dot_builder.h"
+	//#include "structure.h"
 	void yyerror(char *s);
 %}
 
@@ -65,8 +66,9 @@
 programme:
 	liste_declarations liste_fonctions		
 	{
-		$$ = creer_arbre("programme", $2, NULL, MON_AUTRE);
-		affichage_arbre($$);
+		PROGRAMME = creer_arbre("programme", $2, NULL, MON_AUTRE);
+		//affichage_arbre(PROGRAMME);
+		creer_fichier_dot(PROGRAMME);
 		//generer_dot($$);
 	}
 ;
@@ -108,6 +110,10 @@ declaration:
 	{
 		$$ = fixer_type($2,$1);
 	}
+	| EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' 
+	{ 
+		TABLE[ACC] = ajouter_symbole(TABLE[ACC],creer_symbole($3, $2));
+	}
 ;
 liste_declarateurs:	
 	liste_declarateurs ',' declarateur		
@@ -145,11 +151,6 @@ fonction:
 
 		$$ = creer_arbre(copy, bloc, NULL, MON_FONCTION);
 		free(buf);
-	}
-	| EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' 
-	{ 
-		detruire_table();
-		TABLE[ACC] = ajouter_symbole(TABLE[ACC],creer_symbole($3, $2));
 	}
 ;
 type:	
@@ -330,7 +331,7 @@ appel:
 variable:	
 	IDENTIFICATEUR								
 	{
-			$$ = creer_arbre($1, NULL, NULL,MON_AUTRE); 
+		$$ = creer_arbre($1, NULL, NULL,MON_AUTRE); 
 	}
 	| tableau
 	{
@@ -407,7 +408,7 @@ expression:
 	}					
 	| IDENTIFICATEUR '(' liste_expressions ')' 
 	{ 
-		$$ = creer_arbre($1, $3,NULL,MON_AUTRE);
+		$$ = creer_arbre($1, $3,NULL,MON_APPEL);
 	}
 ;
 liste_expressions:	

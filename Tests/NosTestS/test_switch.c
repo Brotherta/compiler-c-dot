@@ -1,6 +1,7 @@
-int i;
+extern int printd(int d);
 
 int main() {
-    int a;
-    a[15][12] = 0;
-}    
+    int i;
+    i=0;
+    printd(i);
+}

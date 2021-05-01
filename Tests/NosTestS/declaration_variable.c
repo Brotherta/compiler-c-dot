@@ -1,18 +1,10 @@
-int toto; 
+extern int printd( int i );
 
-int fact(int a,int b){ 
-    toto = 0;
-    a = 0;
-    b = 0;
-    f = 0;
-}
-
-int main() { 
-    int c;
-    blabla = 1;
-    toto = 0;
-    fact = 1;
-    a = 0;
-    b = 0;
-    f = 0;
+int main() {
+   int i, x;
+   for (i=0; i<10; i=i+1) 
+	if (i==5) break;
+   
+   printd(i);
+   return (i+3);
 }

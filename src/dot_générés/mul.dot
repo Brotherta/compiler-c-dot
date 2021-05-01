@@ -1,0 +1,122 @@
+digraph exempleminiC {
+	node_0 [label ="programme"]
+	node_1 [label ="main, INT" shape=invtrapezium color=blue]
+	node_2 [label ="BLOC"]
+	node_3 [label =":="]
+	node_4 [label ="i"]
+	node_5 [label ="45000"]
+	node_6 [label =":="]
+	node_7 [label ="j"]
+	node_8 [label ="-"]
+	node_9 [label ="123"]
+	node_10 [label ="printd" shape=septagon]
+	node_11 [label ="*"]
+	node_12 [label ="i"]
+	node_13 [label ="j"]
+	node_14 [label ="printd" shape=septagon]
+	node_15 [label ="*"]
+	node_16 [label ="45000"]
+	node_17 [label ="j"]
+	node_18 [label ="printd" shape=septagon]
+	node_19 [label ="*"]
+	node_20 [label ="i"]
+	node_21 [label ="123"]
+	node_22 [label ="printd" shape=septagon]
+	node_23 [label ="*"]
+	node_24 [label ="45000"]
+	node_25 [label ="123"]
+	node_26 [label ="printd" shape=septagon]
+	node_27 [label ="*"]
+	node_28 [label ="i"]
+	node_29 [label ="+"]
+	node_30 [label ="j"]
+	node_31 [label ="0"]
+	node_32 [label ="printd" shape=septagon]
+	node_33 [label ="*"]
+	node_34 [label ="+"]
+	node_35 [label ="i"]
+	node_36 [label ="0"]
+	node_37 [label ="j"]
+	node_38 [label ="printd" shape=septagon]
+	node_39 [label ="*"]
+	node_40 [label ="+"]
+	node_41 [label ="i"]
+	node_42 [label ="0"]
+	node_43 [label ="+"]
+	node_44 [label ="j"]
+	node_45 [label ="0"]
+	node_46 [label ="printd" shape=septagon]
+	node_47 [label ="*"]
+	node_48 [label ="+"]
+	node_49 [label ="i"]
+	node_50 [label ="0"]
+	node_51 [label ="123"]
+	node_52 [label ="printd" shape=septagon]
+	node_53 [label ="*"]
+	node_54 [label ="45000"]
+	node_55 [label ="+"]
+	node_56 [label ="j"]
+	node_57 [label ="0"]
+	node_58 [label ="RETURN" shape=trapezium color = blue]
+	node_59 [label ="0"]
+	node_0 -> node_1
+	node_1 -> node_2
+	node_2 -> node_3
+	node_3 -> node_4
+	node_3 -> node_5
+	node_2 -> node_6
+	node_6 -> node_7
+	node_6 -> node_8
+	node_8 -> node_9
+	node_2 -> node_10
+	node_10 -> node_11
+	node_11 -> node_12
+	node_11 -> node_13
+	node_2 -> node_14
+	node_14 -> node_15
+	node_15 -> node_16
+	node_15 -> node_17
+	node_2 -> node_18
+	node_18 -> node_19
+	node_19 -> node_20
+	node_19 -> node_21
+	node_2 -> node_22
+	node_22 -> node_23
+	node_23 -> node_24
+	node_23 -> node_25
+	node_2 -> node_26
+	node_26 -> node_27
+	node_27 -> node_28
+	node_27 -> node_29
+	node_29 -> node_30
+	node_29 -> node_31
+	node_2 -> node_32
+	node_32 -> node_33
+	node_33 -> node_34
+	node_34 -> node_35
+	node_34 -> node_36
+	node_33 -> node_37
+	node_2 -> node_38
+	node_38 -> node_39
+	node_39 -> node_40
+	node_40 -> node_41
+	node_40 -> node_42
+	node_39 -> node_43
+	node_43 -> node_44
+	node_43 -> node_45
+	node_2 -> node_46
+	node_46 -> node_47
+	node_47 -> node_48
+	node_48 -> node_49
+	node_48 -> node_50
+	node_47 -> node_51
+	node_2 -> node_52
+	node_52 -> node_53
+	node_53 -> node_54
+	node_53 -> node_55
+	node_55 -> node_56
+	node_55 -> node_57
+	node_2 -> node_58
+	node_58 -> node_59
+
+}

@@ -34,6 +34,7 @@ typedef struct _arbre {
 	struct _symbole *symbol_t;
 	struct _arbre *frere_t;
 	struct _arbre *fils_t;
+	int id;
 } arbre;
 
 
@@ -48,13 +49,15 @@ typedef struct _symbole {
 struct symbole *TABLE[TAILLE];
 int ACC;
 
+struct arbre *PROGRAMME;
+
 void nouvelle_adresse();
 void detruire_table();
 void detruire_table_fonction();
 
 arbre *creer_arbre(char *label, arbre *fils, arbre *frere, enum type_arbre mon_mon);
 
-void affichage_arbre(arbre *arbre);
+//void affichage_arbre(arbre *arbre);
 
 void *ajouter_fils(arbre *actuel, arbre *fils);
 void *ajouter_frere(arbre *actuel, arbre *frere);

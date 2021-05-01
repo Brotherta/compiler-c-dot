@@ -31,7 +31,7 @@ arbre *creer_arbre(char *label, arbre *fils, arbre *frere, enum type_arbre mon_m
     nouvel_arbre->fils_t=fils;
     return nouvel_arbre;
 }
-
+/*
 void affichage_arbre(arbre *arbre)
 {
     struct _arbre *liste_frere = NULL;
@@ -48,7 +48,7 @@ void affichage_arbre(arbre *arbre)
         affichage_arbre(liste_frere);
         liste_frere = liste_frere->frere_t;
     }
-}
+}*/
 
 void *ajouter_fils(arbre *actuel, arbre *fils) {
     actuel->fils_t = fils;
