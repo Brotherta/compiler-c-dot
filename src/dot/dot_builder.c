@@ -16,7 +16,6 @@ void creer_fichier_dot(arbre *arbre) {
 
 void creer_node(arbre *arbre, FILE *le_dot) {
     struct _arbre *liste_frere = NULL;
-    
     char* forme = malloc(256);
     forme = "";
 
@@ -24,16 +23,16 @@ void creer_node(arbre *arbre, FILE *le_dot) {
         case MON_FONCTION: 
             forme = " shape=invtrapezium color=blue";
             break;
-	    case MON_IF: 
+        case MON_IF: 
             forme = " shape = diamond";
             break;
-	    case MON_BREAK:
+        case MON_BREAK:
             forme = " shape = box";
             break;
-	    case MON_RETURN: 
+        case MON_RETURN: 
             forme= " shape=trapezium color = blue";
             break;
-	    case MON_APPEL:
+        case MON_APPEL:
             forme = " shape=septagon";
             break;
         default:
@@ -56,7 +55,6 @@ void creer_node(arbre *arbre, FILE *le_dot) {
         creer_node(liste_frere, le_dot);
         liste_frere = liste_frere->frere_t;
     }
-
 }
 
 void assigner_node(arbre *arbre, FILE *le_dot)
@@ -75,23 +73,5 @@ void assigner_node(arbre *arbre, FILE *le_dot)
         assigner_node(liste_frere, le_dot);
         liste_frere = liste_frere->frere_t;
     }
-}
-/*
-void affichage_arbre(arbre *arbre)
-{
-    struct _arbre *liste_frere = NULL;
-    if(arbre->fils_t != NULL)
-    {
-        printf("%s -> %s        ",arbre->label, arbre->fils_t->label);
-        affichage_arbre(arbre->fils_t);
-        liste_frere = arbre->fils_t->frere_t;
-    }
-    
-    while(liste_frere != NULL) 
-    {
-        printf("%s -> %s        ",arbre->label,liste_frere->label);
-        affichage_arbre(liste_frere);
-        liste_frere = liste_frere->frere_t;
-    }
-}*/
 
+}

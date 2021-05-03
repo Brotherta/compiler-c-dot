@@ -24,9 +24,9 @@ enum type_arbre{
 	MON_RETURN, 
 	MON_APPEL, 
 	MON_TABLEAU, 
-	MON_AUTRE};
-
-
+	MON_VARIABLE,
+	MON_AUTRE
+};
 
 typedef struct _arbre {
 	char *label;
@@ -38,10 +38,10 @@ typedef struct _arbre {
 } arbre;
 
 
-
 typedef struct _symbole {
 	char *var_t;
 	char *type_t;
+	int dimension;
 	struct _symbole *suivant_t;
 } symbole;
 
@@ -50,6 +50,8 @@ struct symbole *TABLE[TAILLE];
 int ACC;
 
 struct arbre *PROGRAMME;
+
+void yyerror(char *s);
 
 void nouvelle_adresse();
 void detruire_table();
@@ -62,13 +64,16 @@ arbre *creer_arbre(char *label, arbre *fils, arbre *frere, enum type_arbre mon_m
 void *ajouter_fils(arbre *actuel, arbre *fils);
 void *ajouter_frere(arbre *actuel, arbre *frere);
 
-symbole *creer_symbole(char* var_t, char *type_t);
+symbole *creer_symbole(char* var_t, char* type_t);
 symbole *ajouter_symbole(symbole *actuel, symbole *suivant);
+void incr_dimension(symbole *actuel);
 
-symbole *fixer_type(symbole *actuel, char *type);
+symbole *fixer_type(symbole *actuel, char* type_t);
 symbole *copie_symbole(symbole *a_copier);
-void rechercher_symbole(char *label);
-
+int rechercher_symbole(char *label);
+int get_dimension_variable(int dimension_max, arbre *actuel);
+void verif_type_affectation(arbre *variable, arbre *expression);
+void verif_dimension_expression(int dimension_max, arbre *actuel);
 //void generer_dot($$);
 
 #endif

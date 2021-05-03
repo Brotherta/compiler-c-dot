@@ -1,7 +1,7 @@
 %{
 	#include "dot/dot_builder.h"
 	//#include "structure.h"
-	void yyerror(char *s);
+	
 %}
 
 %token VOID INT FOR WHILE IF ELSE SWITCH CASE DEFAULT
@@ -19,7 +19,7 @@
 
 %union {
 	char* label;
-	char* type_var;
+	char *type_t;
 	struct _symbole *symbole;
 	struct _arbre *arbre;
 }
@@ -30,7 +30,7 @@
 %type <label> binary_comp
 
 
-%type <type_var> type 
+%type <type_t> type 
 
 %type <arbre> expression
 %type <arbre> variable
@@ -67,9 +67,7 @@ programme:
 	liste_declarations liste_fonctions		
 	{
 		PROGRAMME = creer_arbre("programme", $2, NULL, MON_AUTRE);
-		//affichage_arbre(PROGRAMME);
 		creer_fichier_dot(PROGRAMME);
-		//generer_dot($$);
 	}
 ;
 liste_declarations:
@@ -123,7 +121,8 @@ liste_declarateurs:
 	}
 	| declarateur								
 	{ 
-		$$ = $1; 
+		$$ = $1;
+		//printf("%d", $$->dimension); 
 	}
 ;
 declarateur:	
@@ -133,7 +132,7 @@ declarateur:
 	}
 	| declarateur '[' CONSTANTE ']'
 	{
-		
+		incr_dimension($$);
 	}
 ;
 fonction:	
@@ -280,14 +279,21 @@ list_case_default :
 		$$=$1;
 	}
 ;
+
 case_default:
-	| CASE CONSTANTE ':' liste_instructions
+	CASE CONSTANTE ':' liste_instructions
 	{
-		$$ = creer_arbre("CASE", creer_arbre($2,NULL,$4, MON_AUTRE), NULL, MON_CASE);
+		char *buf = malloc(256);
+		snprintf(buf, 256, "CASE%s", $2);
+		char* copy = malloc(256);
+		strcpy(copy, buf);
+
+		$$ = creer_arbre(copy, creer_arbre("BLOC",$4,NULL,MON_BLOC), NULL, MON_CASE);
+		free(buf);
 	}
 	| DEFAULT ':' liste_instructions
 	{
-		$$ = creer_arbre("DEFAULT", $3, NULL, MON_DEFAUT);
+		$$ = creer_arbre("DEFAULT", creer_arbre("BLOC",$3,NULL,MON_BLOC), NULL, MON_DEFAUT);
 	}
 ;
 
@@ -309,9 +315,9 @@ saut:
 affectation:	
 	variable '=' expression						
 	{ 
-		rechercher_symbole($1->label);
+		verif_type_affectation($1,$3);
 		ajouter_frere($1, $3);
-		$$ = creer_arbre(":=", $1, NULL,MON_AUTRE);
+		$$ = creer_arbre(":=", $1, NULL, MON_AUTRE);
 	}
 ;
 
@@ -331,7 +337,7 @@ appel:
 variable:	
 	IDENTIFICATEUR								
 	{
-		$$ = creer_arbre($1, NULL, NULL,MON_AUTRE); 
+		$$ = creer_arbre($1, NULL, NULL, MON_VARIABLE); 
 	}
 	| tableau
 	{
@@ -404,10 +410,12 @@ expression:
 	}				
 	| variable 	
 	{ 
+		//rechercher_symbole($1->label);
 		$$ = $1; 
 	}					
 	| IDENTIFICATEUR '(' liste_expressions ')' 
 	{ 
+		
 		$$ = creer_arbre($1, $3,NULL,MON_APPEL);
 	}
 ;
@@ -461,10 +469,6 @@ binary_comp:
 ;
 %%
 
-void yyerror(char *s)
-{
-	fprintf( stderr, "%s\n", s );
-}
 
 int main()
 {
