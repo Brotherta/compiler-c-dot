@@ -1,12 +1,13 @@
 D                       [0-9]
 L                       [a-zA-Z_]                 
-SEP                     [ \t\v\n\f]
+SEP                     [ \t\v\f]
+INTERDIT                [²&é~"#'è`ç^à@°€$£¤¨µ%ù§.?■ÜÖ☺]
 %{
 #include "y.tab.h"
 #include "structure.h"
 
 %}
-
+%option yylineno
 
 %%
 "extern"                { return EXTERN; }  // mot reservé //
@@ -24,7 +25,8 @@ SEP                     [ \t\v\n\f]
 
 {L}({L}|{D})*           { yylval.label = strdup(yytext); return IDENTIFICATEUR; }  // Variables
 {D}+                    { yylval.label = strdup(yytext); return CONSTANTE; }  // 
-"/*"({L}|{SEP}|{D})*"*/" {}
+"/*"({L}|{SEP}|{INTERDIT}|{D})*"*/" {}
+"//"({L}|{SEP}|{INTERDIT}|{D})*     {}
 
 
 
@@ -55,7 +57,9 @@ SEP                     [ \t\v\n\f]
 "/"                     { return DIV; }
 ","                     { return ','; }
 ":"                     { return ':'; }
-{SEP}+                  {} // on fait rien
-.                       { yyerror(strdup(yytext)); }
+\n                      {}
+{SEP}+                  {}
+{INTERDIT}              { yyerror("caractère interdit."); }
+.                       {}
 %%
 

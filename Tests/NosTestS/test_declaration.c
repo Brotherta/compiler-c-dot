@@ -30,7 +30,7 @@ int test2( int g ) {
         {
             int i; 
             i = 0;
-            a = i + b ;
+            a = i + d ;
         }
     }
     return a;
@@ -40,6 +40,6 @@ int main() {
     int x,y;
     x = test(4);
     y = test2(2);
-
+    
     return x + y;
 }

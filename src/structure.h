@@ -37,13 +37,22 @@ typedef struct _arbre {
 	int id;
 } arbre;
 
+typedef struct _param {
+	char *type_t;
+	struct _param *suivant_t;
+} param;
 
 typedef struct _symbole {
 	char *var_t;
 	char *type_t;
 	int dimension;
+	int nb_param;
+	struct _param *param_t;
 	struct _symbole *suivant_t;
 } symbole;
+
+
+
 
 
 struct symbole *TABLE[TAILLE];
@@ -65,6 +74,8 @@ void *ajouter_fils(arbre *actuel, arbre *fils);
 void *ajouter_frere(arbre *actuel, arbre *frere);
 
 symbole *creer_symbole(char* var_t, char* type_t);
+symbole *creer_symbole_fonction(char* var_t, char* type_t, symbole *liste_param);
+
 symbole *ajouter_symbole(symbole *actuel, symbole *suivant);
 void incr_dimension(symbole *actuel);
 
@@ -74,6 +85,9 @@ int rechercher_symbole(char *label);
 int get_dimension_variable(int dimension_max, arbre *actuel);
 void verif_type_affectation(arbre *variable, arbre *expression);
 void verif_dimension_expression(int dimension_max, arbre *actuel);
+int verif_fonction(char* label);
+int verif_param_expression(arbre *expression);
+void verif_switch(arbre *arbre_switch);
 //void generer_dot($$);
 
 #endif

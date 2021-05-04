@@ -3,7 +3,6 @@
 
 #include "../structure.h"
 
-
 void affichage_arbre();
 
 

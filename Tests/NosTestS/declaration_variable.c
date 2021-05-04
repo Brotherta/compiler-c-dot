@@ -1,5 +1,8 @@
+/* TEST TABLEAUX MULTIDIMENSIONNELS MINIC */
+
+int tab[3][4][5];
+int b[3][4][5];
+
 int main() {
-   int a[1][1];
-   int b[1][2][3];
-   a[1] = b[0];
+  tab[1][2][3] = b[0][1];
 }

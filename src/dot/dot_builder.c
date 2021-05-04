@@ -1,9 +1,23 @@
 #include "dot_builder.h"
+#include <time.h>
 int id_acc = 0;
 
 void creer_fichier_dot(arbre *arbre) {
+
+    time_t rawtime;
+	struct tm * timeinfo;
+	time ( &rawtime );
+	timeinfo = localtime ( &rawtime );
+
+	char *buf = malloc(256);
+	snprintf(buf, 256, "Fichier_DOT_%d_%d_%d.dot", timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+
+	char * copy = malloc(256);
+	strcpy(copy,buf);
+	free(buf);
+    
     FILE *fd_dot;
-    fd_dot=fopen("./le_dot.dot","w+");
+    fd_dot=fopen(copy,"w+");
 
     fprintf(fd_dot, "digraph exempleminiC {\n");
     creer_node(arbre, fd_dot);

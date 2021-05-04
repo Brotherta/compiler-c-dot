@@ -1,7 +1,7 @@
 %{
+	extern int yylineno;
 	#include "dot/dot_builder.h"
 	//#include "structure.h"
-	
 %}
 
 %token VOID INT FOR WHILE IF ELSE SWITCH CASE DEFAULT
@@ -23,6 +23,7 @@
 	struct _symbole *symbole;
 	struct _arbre *arbre;
 }
+
 
 %token <label> IDENTIFICATEUR
 %token <label> CONSTANTE
@@ -74,7 +75,6 @@ liste_declarations:
 	liste_declarations declaration 			
 	{			
 		TABLE[ACC]=ajouter_symbole(TABLE[ACC], $2);
-		struct _symbole *tmp = TABLE[ACC];	
 	}
 	|										
 	{  
@@ -110,7 +110,7 @@ declaration:
 	}
 	| EXTERN type IDENTIFICATEUR '(' liste_parms ')' ';' 
 	{ 
-		TABLE[ACC] = ajouter_symbole(TABLE[ACC],creer_symbole($3, $2));
+		TABLE[ACC] = ajouter_symbole(TABLE[ACC],creer_symbole_fonction($3, $2, $5));
 	}
 ;
 liste_declarateurs:	
@@ -135,13 +135,19 @@ declarateur:
 		incr_dimension($$);
 	}
 ;
-fonction:	
-	type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}' 	
-	{
-		detruire_table_fonction();
-		TABLE[ACC] = ajouter_symbole(TABLE[ACC],creer_symbole($2, $1));
-		struct _arbre *bloc = creer_arbre("BLOC", $8, NULL, MON_BLOC);
 
+fonction:	
+	type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}'	
+	{
+		
+		detruire_table_fonction();
+		struct _arbre *bloc;
+		TABLE[ACC] = ajouter_symbole(TABLE[ACC], creer_symbole_fonction($2, $1, $4));
+		if ($8 == NULL) {
+			bloc = creer_arbre("BLOC", NULL, NULL, MON_BLOC);
+		} else {
+			bloc = creer_arbre("BLOC", $8, NULL, MON_BLOC);
+		}
 		char* buf = malloc(256);
 		snprintf(buf,256,"%s, %s",$2,$1);
 
@@ -152,6 +158,7 @@ fonction:
 		free(buf);
 	}
 ;
+
 type:	
 	VOID						
 	{ 
@@ -171,12 +178,14 @@ parm :
 liste_parms :
 	liste_parm_creator
 	{
-		nouvelle_adresse();
+		$$ = $1;
+		nouvelle_adresse_param();
 		TABLE[ACC] = ajouter_symbole(TABLE[ACC],$1);
 	}
 	| 
 	{
-		nouvelle_adresse();
+		$$ = NULL;
+		nouvelle_adresse_param();
 	}
 ;
 liste_parm_creator :
@@ -187,7 +196,6 @@ liste_parm_creator :
 	}
 	| parm
 	{
-		
 	}
 ;
 liste_instructions:	
@@ -197,7 +205,7 @@ liste_instructions:
 	}
 	|	
 	{
-	
+		$$=NULL;
 	}
 ;
 inst_liste_creator:
@@ -265,6 +273,7 @@ selection:
 	| SWITCH '(' expression ')' '{' list_case_default '}'
 	{
 		$$ = creer_arbre("SWITCH", $3, NULL, MON_SWITCH);
+		verif_switch($6);
 		ajouter_frere($3, $6);
 	}
 ;
@@ -331,6 +340,18 @@ bloc:
 appel:	
 	IDENTIFICATEUR '(' liste_expressions ')' ';'	
 	{ 
+		int nb_param_fonction = verif_fonction($1);
+		int nb_param_appel = verif_param_expression($3);
+		if (nb_param_appel != nb_param_fonction) {
+			char *buf = malloc(256);
+			snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", $1, nb_param_appel, nb_param_fonction);
+
+			char *copy=malloc(256);
+			strcpy(copy,buf);
+			yyerror(copy);
+			free(buf);
+			exit(1);
+		}
 		$$=creer_arbre($1,$3,NULL,MON_APPEL);
 	}	
 ;
@@ -410,11 +431,26 @@ expression:
 	}				
 	| variable 	
 	{ 
-		//rechercher_symbole($1->label);
+		if (!strcmp("TAB", $1->label)) {
+			rechercher_symbole($1->fils_t->label);
+		} else {
+			rechercher_symbole($1->label);	
+		}
 		$$ = $1; 
 	}					
 	| IDENTIFICATEUR '(' liste_expressions ')' 
 	{ 
+		int nb_param_fonction = verif_fonction($1);
+		int nb_param_appel = verif_param_expression($3);
+		if (nb_param_appel != nb_param_fonction) {
+			char *buf = malloc(256);
+			snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", $1, nb_param_appel, nb_param_fonction);
+			char *copy=malloc(256);
+			strcpy(copy,buf);
+			yyerror(copy);
+			free(buf);
+			exit(1);
+		}
 		
 		$$ = creer_arbre($1, $3,NULL,MON_APPEL);
 	}
@@ -472,12 +508,7 @@ binary_comp:
 
 int main()
 {
-	// nouvel=creer_arbre("a", creer_arbre("b",creer_arbre("e",NULL ,creer_arbre("f", creer_arbre("g",NULL ,NULL), NULL)) ,creer_arbre("c",NULL ,creer_arbre("d", NULL, NULL))), NULL);
-	//affichage_arbre(nouvel);
-	
-	//init_table();
-
 	yyparse();
-	//creation_dot();
+	
 	return 0;
 }

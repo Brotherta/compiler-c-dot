@@ -1,4 +1,5 @@
 #include "structure.h"
+extern int yylineno;
 
 int ACC = 0;
 
@@ -8,7 +9,13 @@ void nouvelle_adresse()
     while (TABLE[ACC] != NULL) 
     {
         ACC++;
+        //printf("nouvelle table %d\n",ACC);
     }
+}
+
+void nouvelle_adresse_param() 
+{
+    ACC++;
 }
 
 void detruire_table()
@@ -52,7 +59,27 @@ symbole *creer_symbole(char* var_t, char* type_t) {
     nouveau_symbole->var_t=var_t;
     nouveau_symbole->type_t=type_t;
     nouveau_symbole->dimension=0; //tab
+    nouveau_symbole->nb_param=-1;
     return nouveau_symbole;
+}
+
+symbole *creer_symbole_fonction(char* var_t, char* type_t, symbole *liste_param)
+{
+    struct _symbole *actuel=creer_symbole(var_t,type_t);
+    struct _param *param_courant = (param*) malloc(sizeof(param));
+    actuel->nb_param = 0;
+    actuel->param_t=param_courant;
+
+    while(liste_param != NULL) 
+    {
+        actuel->nb_param++;
+        param_courant->type_t = liste_param->type_t;
+        struct _param *nouveau_param = (param*) malloc(sizeof(param));
+        param_courant->suivant_t = nouveau_param;
+        liste_param = liste_param->suivant_t;
+        param_courant = param_courant->suivant_t;
+    }
+    return actuel;
 }
 
 void incr_dimension(symbole *actuel){
@@ -120,7 +147,7 @@ void verif_type_affectation(arbre *variable, arbre *expression) {
     int dimension_symbole;
 
     // On récupère la dimension du symbole de la variable et on vérifie le type de la variable.
-    if (!strcmp(variable->label,"TAB") && variable->fils_t != NULL) {
+    if (variable->type_arbre_t == MON_TABLEAU && variable->fils_t != NULL) {
         dimension_symbole = rechercher_symbole(variable->fils_t->label);
     }
     else {
@@ -149,7 +176,7 @@ int get_dimension_variable(int dimension_max, arbre *actuel) {
     }
     if (dimension_max < 0) {
         char *buf = malloc(256);
-        snprintf(buf,256, "%s mauvaise dimension", actuel->fils_t->label);
+        snprintf(buf,256, "%s Mauvaise dimension", actuel->fils_t->label);
         char *copy=malloc(256);
         strcpy(copy,buf);
         yyerror(copy);
@@ -158,7 +185,6 @@ int get_dimension_variable(int dimension_max, arbre *actuel) {
     }
     return dimension_max;
 }
-
 
 // verifie que l'arbre 'actuel' a bien le meme nombre de dimensions que dimensions max
 // exemple :
@@ -209,7 +235,7 @@ void verif_dimension_expression(int dimension_max, arbre *actuel)
         dimension_actuel = 0;
         if (dimension_actuel != dimension_max) {
              char *buf = malloc(256);
-            snprintf(buf,256, "%s : Mauvaise dimension", actuel->label);
+            snprintf(buf,256, "%s : 4Mauvaise dimension", actuel->label);
             char *copy=malloc(256);
             strcpy(copy,buf);
             yyerror(copy);
@@ -230,7 +256,69 @@ void verif_dimension_expression(int dimension_max, arbre *actuel)
     }
 }
 
+int verif_fonction(char* label) {
+    int ACC_copie = ACC;
+    while(ACC_copie >= 0) {
+        struct _symbole *courant = TABLE[ACC_copie];
+        while(courant != NULL) {
+            if (!strcmp(courant->var_t,label)) {
+                return courant->nb_param;
+            }
+            courant=courant->suivant_t;
+        }
+        ACC_copie--;
+    }
+    
+    char *buf = malloc(256);
+    snprintf(buf,256, "%s n'est pas défini.", label);
+
+    char *copy=malloc(256);
+    strcpy(copy,buf);
+    yyerror(copy);
+    free(buf);
+    exit(1);
+}
+
+
+int verif_param_expression(arbre *expression)
+{
+    int res = 0;
+    struct _arbre *liste_frere = NULL;
+    if (expression == NULL) {
+        return res;
+    }
+    res++;
+    
+    liste_frere = expression->frere_t;
+
+    while(liste_frere!=NULL){
+        res++;
+        liste_frere=liste_frere->frere_t;
+    }
+    return res;
+}
+
+void verif_switch(arbre *arbre_switch) {
+    struct _arbre *liste_frere = NULL;
+    liste_frere = arbre_switch;
+    while(liste_frere->frere_t!=NULL){
+        if(liste_frere->type_arbre_t == MON_CASE) {
+            liste_frere=liste_frere->frere_t;
+        } else {
+            yyerror("Doit être une expression CASE.");
+            exit(1);
+        }
+    }
+    if(liste_frere->type_arbre_t!=MON_DEFAUT)
+    {
+        yyerror("Il manque le case DEFAULT.");
+        exit(1);
+    }
+    return;
+}
+
+
 void yyerror(char *s)
 {
-	fprintf( stderr, "%s\n", s );
+	fprintf( stderr, "%s ligne :%d\n", s, yylineno );
 }
