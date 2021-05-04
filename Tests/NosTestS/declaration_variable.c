@@ -1,8 +1,13 @@
-/* TEST TABLEAUX MULTIDIMENSIONNELS MINIC */
+extern int printd( int i );
 
-int tab[3][4][5];
-int b[3][4][5];
+int fact( int n ) {
+  if ( n <= 1 )
+    return 1;
+   fact(n-1, 1);
+  return n;
+}
 
 int main() {
-  tab[1][2][3] = b[0][1];
+  printd(fact(10));
+  return 0;
 }

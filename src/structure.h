@@ -28,6 +28,7 @@ enum type_arbre{
 	MON_AUTRE
 };
 
+
 typedef struct _arbre {
 	char *label;
 	enum type_arbre type_arbre_t;
@@ -51,16 +52,20 @@ typedef struct _symbole {
 	struct _symbole *suivant_t;
 } symbole;
 
-
-
-
-
 struct symbole *TABLE[TAILLE];
+
 int ACC;
+char *label_appel_recursif;
+int est_recursif;
+int nb_param_appel_recursif;
 
 struct arbre *PROGRAMME;
+struct recursion *la_recursion;
 
 void yyerror(char *s);
+
+void reset_la_recursion();
+void set_la_recursion(char* label, int est_recursif, int nb_param_appel);
 
 void nouvelle_adresse();
 void detruire_table();

@@ -139,10 +139,25 @@ declarateur:
 fonction:	
 	type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}'	
 	{
-		
 		detruire_table_fonction();
 		struct _arbre *bloc;
 		TABLE[ACC] = ajouter_symbole(TABLE[ACC], creer_symbole_fonction($2, $1, $4));
+		
+		if (!est_recursif) {
+			int nb_param_fonction = verif_fonction($2);
+			if (nb_param_appel_recursif != nb_param_fonction) {
+				char *buf = malloc(256);
+				snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", $2, nb_param_appel_recursif, nb_param_fonction);
+				char *copy=malloc(256);
+				strcpy(copy,buf);
+				yyerror(copy);
+				free(buf);
+				exit(1);
+			}
+			reset_la_recursion();
+		}
+
+
 		if ($8 == NULL) {
 			bloc = creer_arbre("BLOC", NULL, NULL, MON_BLOC);
 		} else {
@@ -342,15 +357,20 @@ appel:
 	{ 
 		int nb_param_fonction = verif_fonction($1);
 		int nb_param_appel = verif_param_expression($3);
-		if (nb_param_appel != nb_param_fonction) {
-			char *buf = malloc(256);
-			snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", $1, nb_param_appel, nb_param_fonction);
-
-			char *copy=malloc(256);
-			strcpy(copy,buf);
-			yyerror(copy);
-			free(buf);
-			exit(1);
+		if(nb_param_fonction==-1) // peut être un appel récursif.
+		{
+			set_la_recursion($1,1,nb_param_appel);
+		} 
+		else {
+			if (nb_param_appel != nb_param_fonction) {
+				char *buf = malloc(256);
+				snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", $1, nb_param_appel, nb_param_fonction);
+				char *copy=malloc(256);
+				strcpy(copy,buf);
+				yyerror(copy);
+				free(buf);
+				exit(1);
+			}
 		}
 		$$=creer_arbre($1,$3,NULL,MON_APPEL);
 	}	
@@ -442,14 +462,20 @@ expression:
 	{ 
 		int nb_param_fonction = verif_fonction($1);
 		int nb_param_appel = verif_param_expression($3);
-		if (nb_param_appel != nb_param_fonction) {
-			char *buf = malloc(256);
-			snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", $1, nb_param_appel, nb_param_fonction);
-			char *copy=malloc(256);
-			strcpy(copy,buf);
-			yyerror(copy);
-			free(buf);
-			exit(1);
+		if(nb_param_fonction==-1) // peut être un appel récursif.
+		{
+			set_la_recursion($1,1,nb_param_appel);
+		} 
+		else {
+			if (nb_param_appel != nb_param_fonction) {
+				char *buf = malloc(256);
+				snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", $1, nb_param_appel, nb_param_fonction);
+				char *copy=malloc(256);
+				strcpy(copy,buf);
+				yyerror(copy);
+				free(buf);
+				exit(1);
+			}
 		}
 		
 		$$ = creer_arbre($1, $3,NULL,MON_APPEL);
@@ -506,8 +532,11 @@ binary_comp:
 %%
 
 
+
 int main()
 {
+	//struct _recursion *la_recursion = (recursion*) malloc(sizeof(recursion));
+	reset_la_recursion();
 	yyparse();
 	
 	return 0;

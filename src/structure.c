@@ -2,6 +2,25 @@
 extern int yylineno;
 
 int ACC = 0;
+char *label_appel_recursif;
+int est_recursif = 0;
+int nb_param_appel_recursif = 0;
+
+
+void reset_la_recursion()
+{
+    label_appel_recursif = NULL;
+    est_recursif=0;
+    nb_param_appel_recursif=0;
+}
+
+void set_la_recursion(char* label, int est_recursif, int nb_param_appel) {
+
+    label_appel_recursif=label;
+	est_recursif = est_recursif;
+	nb_param_appel_recursif = nb_param_appel;
+}
+
 
 void nouvelle_adresse()
 {
@@ -176,7 +195,7 @@ int get_dimension_variable(int dimension_max, arbre *actuel) {
     }
     if (dimension_max < 0) {
         char *buf = malloc(256);
-        snprintf(buf,256, "%s Mauvaise dimension", actuel->fils_t->label);
+        snprintf(buf,256, "%s : Mauvaise dimension", actuel->fils_t->label);
         char *copy=malloc(256);
         strcpy(copy,buf);
         yyerror(copy);
@@ -235,7 +254,7 @@ void verif_dimension_expression(int dimension_max, arbre *actuel)
         dimension_actuel = 0;
         if (dimension_actuel != dimension_max) {
              char *buf = malloc(256);
-            snprintf(buf,256, "%s : 4Mauvaise dimension", actuel->label);
+            snprintf(buf,256, "%s : Mauvaise dimension", actuel->label);
             char *copy=malloc(256);
             strcpy(copy,buf);
             yyerror(copy);
@@ -257,6 +276,7 @@ void verif_dimension_expression(int dimension_max, arbre *actuel)
 }
 
 int verif_fonction(char* label) {
+    
     int ACC_copie = ACC;
     while(ACC_copie >= 0) {
         struct _symbole *courant = TABLE[ACC_copie];
@@ -268,7 +288,9 @@ int verif_fonction(char* label) {
         }
         ACC_copie--;
     }
-    
+    return -1;
+
+    /*
     char *buf = malloc(256);
     snprintf(buf,256, "%s n'est pas défini.", label);
 
@@ -276,7 +298,7 @@ int verif_fonction(char* label) {
     strcpy(copy,buf);
     yyerror(copy);
     free(buf);
-    exit(1);
+    exit(1);*/
 }
 
 
