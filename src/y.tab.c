@@ -70,9 +70,8 @@
 
 	extern int yylineno;
 	#include "dot/dot_builder.h"
-	//#include "structure.h"
 
-#line 76 "y.tab.c"
+#line 75 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -201,7 +200,7 @@ union YYSTYPE
 	struct _symbole *symbole;
 	struct _arbre *arbre;
 
-#line 205 "y.tab.c"
+#line 204 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -580,15 +579,15 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    68,    68,    75,    80,    87,    92,    97,   101,   107,
-     111,   117,   122,   129,   133,   140,   178,   182,   188,   194,
-     201,   207,   212,   217,   222,   227,   231,   237,   241,   245,
-     249,   253,   257,   263,   270,   277,   282,   288,   297,   301,
-     308,   318,   325,   329,   333,   340,   349,   356,   379,   383,
-     390,   394,   400,   404,   409,   414,   419,   424,   429,   434,
-     439,   444,   448,   452,   461,   485,   489,   492,   496,   502,
-     506,   510,   514,   521,   522,   525,   526,   527,   528,   529,
-     530
+       0,    60,    60,    67,    71,    75,    77,    81,    83,    87,
+      89,    95,    97,   101,   103,   107,   143,   145,   149,   153,
+     158,   165,   167,   171,   173,   177,   179,   183,   185,   187,
+     189,   191,   193,   197,   204,   211,   216,   222,   230,   232,
+     236,   246,   252,   254,   256,   260,   268,   275,   297,   299,
+     303,   305,   309,   311,   316,   321,   326,   331,   336,   341,
+     346,   351,   355,   359,   368,   391,   393,   397,   399,   403,
+     405,   407,   409,   416,   417,   421,   422,   423,   424,   425,
+     426
 };
 #endif
 
@@ -1508,134 +1507,110 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 69 "mongcc.y"
-        {
+#line 60 "mongcc.y"
+                                           {
 		PROGRAMME = creer_arbre("programme", (yyvsp[0].arbre), NULL, MON_AUTRE);
 		creer_fichier_dot(PROGRAMME);
 	}
-#line 1517 "y.tab.c"
+#line 1516 "y.tab.c"
     break;
 
   case 3:
-#line 76 "mongcc.y"
-        {			
+#line 67 "mongcc.y"
+                                       {		
 		TABLE[ACC]=ajouter_symbole(TABLE[ACC], (yyvsp[0].symbole));
 	}
-#line 1525 "y.tab.c"
+#line 1524 "y.tab.c"
     break;
 
   case 4:
-#line 80 "mongcc.y"
-        {  
-		nouvelle_adresse(); 
-		//printf("nouvelle décl %d\n",ACC);
-	}
-#line 1534 "y.tab.c"
+#line 71 "mongcc.y"
+          { nouvelle_adresse(); }
+#line 1530 "y.tab.c"
     break;
 
   case 5:
-#line 88 "mongcc.y"
-        {
-		(yyval.arbre)=(yyvsp[0].arbre);
-	}
-#line 1542 "y.tab.c"
+#line 75 "mongcc.y"
+                                { (yyval.arbre)=(yyvsp[0].arbre);}
+#line 1536 "y.tab.c"
     break;
 
   case 6:
-#line 92 "mongcc.y"
-        {
-		
-	}
-#line 1550 "y.tab.c"
+#line 77 "mongcc.y"
+          { (yyval.arbre) = NULL; }
+#line 1542 "y.tab.c"
     break;
 
   case 7:
-#line 98 "mongcc.y"
-        {
-		ajouter_frere((yyvsp[-1].arbre),(yyvsp[0].arbre));
-	}
-#line 1558 "y.tab.c"
+#line 81 "mongcc.y"
+                                         { ajouter_frere((yyvsp[-1].arbre),(yyvsp[0].arbre)); }
+#line 1548 "y.tab.c"
     break;
 
   case 8:
-#line 102 "mongcc.y"
-        {
-		(yyval.arbre)=(yyvsp[0].arbre);
-	}
-#line 1566 "y.tab.c"
+#line 83 "mongcc.y"
+                   { (yyval.arbre)=(yyvsp[0].arbre);}
+#line 1554 "y.tab.c"
     break;
 
   case 9:
-#line 108 "mongcc.y"
-        {
-		(yyval.symbole) = fixer_type((yyvsp[-1].symbole),(yyvsp[-2].type_t));
-	}
-#line 1574 "y.tab.c"
+#line 87 "mongcc.y"
+                                    { (yyval.symbole) = fixer_type((yyvsp[-1].symbole),(yyvsp[-2].type_t)); }
+#line 1560 "y.tab.c"
     break;
 
   case 10:
-#line 112 "mongcc.y"
-        { 
+#line 89 "mongcc.y"
+                                                             { 
 		TABLE[ACC] = ajouter_symbole(TABLE[ACC],creer_symbole_fonction((yyvsp[-4].label), (yyvsp[-5].type_t), (yyvsp[-2].symbole)));
 	}
-#line 1582 "y.tab.c"
+#line 1568 "y.tab.c"
     break;
 
   case 11:
-#line 118 "mongcc.y"
-        { 		
-		(yyval.symbole) = ajouter_symbole((yyvsp[-2].symbole), (yyvsp[0].symbole));
-		
-	}
-#line 1591 "y.tab.c"
+#line 95 "mongcc.y"
+                                           { verif_redefinition((yyvsp[0].symbole)->var_t ,(yyvsp[-2].symbole));(yyval.symbole) = ajouter_symbole((yyvsp[-2].symbole), (yyvsp[0].symbole)); }
+#line 1574 "y.tab.c"
     break;
 
   case 12:
-#line 123 "mongcc.y"
-        { 
-		(yyval.symbole) = (yyvsp[0].symbole);
-		//printf("%d", $$->dimension); 
-	}
-#line 1600 "y.tab.c"
+#line 97 "mongcc.y"
+                      { (yyval.symbole) = (yyvsp[0].symbole); }
+#line 1580 "y.tab.c"
     break;
 
   case 13:
-#line 130 "mongcc.y"
-        { 
-		(yyval.symbole) = creer_symbole((yyvsp[0].label), NULL);  
-	}
-#line 1608 "y.tab.c"
+#line 101 "mongcc.y"
+                       { (yyval.symbole) = creer_symbole((yyvsp[0].label), NULL); }
+#line 1586 "y.tab.c"
     break;
 
   case 14:
-#line 134 "mongcc.y"
-        {
-		incr_dimension((yyval.symbole));
-	}
-#line 1616 "y.tab.c"
+#line 103 "mongcc.y"
+                                        { incr_dimension((yyval.symbole)); }
+#line 1592 "y.tab.c"
     break;
 
   case 15:
-#line 141 "mongcc.y"
-        {
+#line 107 "mongcc.y"
+                                                                                              {
 		detruire_table_fonction();
 		struct _arbre *bloc;
 		TABLE[ACC] = ajouter_symbole(TABLE[ACC], creer_symbole_fonction((yyvsp[-7].label), (yyvsp[-8].type_t), (yyvsp[-5].symbole)));
-		
-		if (!est_recursif) {
+
+		if (est_recursif) 
+		{
 			int nb_param_fonction = verif_fonction((yyvsp[-7].label));
 			if (nb_param_appel_recursif != nb_param_fonction) {
 				char *buf = malloc(256);
-				snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", (yyvsp[-7].label), nb_param_appel_recursif, nb_param_fonction);
+				snprintf(buf,256, "%s n'a pas le bon nombre de parametre, %d au lieu de %d", (yyvsp[-7].label), nb_param_appel_recursif, nb_param_fonction);
 				char *copy=malloc(256);
 				strcpy(copy,buf);
-				yyerror(copy);
 				free(buf);
-				exit(1);
+				erreur(copy,NULL);
 			}
 			reset_la_recursion();
 		}
-
 
 		if ((yyvsp[-1].arbre) == NULL) {
 			bloc = creer_arbre("BLOC", NULL, NULL, MON_BLOC);
@@ -1651,216 +1626,182 @@ yyreduce:
 		(yyval.arbre) = creer_arbre(copy, bloc, NULL, MON_FONCTION);
 		free(buf);
 	}
-#line 1655 "y.tab.c"
+#line 1630 "y.tab.c"
     break;
 
   case 16:
-#line 179 "mongcc.y"
-        { 
-		(yyval.type_t) = "VOID";
-	}
-#line 1663 "y.tab.c"
+#line 143 "mongcc.y"
+             { (yyval.type_t) = "VOID"; }
+#line 1636 "y.tab.c"
     break;
 
   case 17:
-#line 183 "mongcc.y"
-        { 
-		(yyval.type_t) = "INT"; 
-	}
-#line 1671 "y.tab.c"
+#line 145 "mongcc.y"
+              { (yyval.type_t) = "INT"; }
+#line 1642 "y.tab.c"
     break;
 
   case 18:
-#line 189 "mongcc.y"
-        {
-		(yyval.symbole)=creer_symbole((yyvsp[0].label),"INT");
-	}
-#line 1679 "y.tab.c"
+#line 149 "mongcc.y"
+                           { (yyval.symbole)=creer_symbole((yyvsp[0].label),"INT"); }
+#line 1648 "y.tab.c"
     break;
 
   case 19:
-#line 195 "mongcc.y"
-        {
+#line 153 "mongcc.y"
+                           {
 		(yyval.symbole) = (yyvsp[0].symbole);
 		nouvelle_adresse_param();
 		TABLE[ACC] = ajouter_symbole(TABLE[ACC],(yyvsp[0].symbole));
 	}
-#line 1689 "y.tab.c"
+#line 1658 "y.tab.c"
     break;
 
   case 20:
-#line 201 "mongcc.y"
-        {
+#line 158 "mongcc.y"
+          {
 		(yyval.symbole) = NULL;
 		nouvelle_adresse_param();
 	}
-#line 1698 "y.tab.c"
+#line 1667 "y.tab.c"
     break;
 
   case 21:
-#line 208 "mongcc.y"
-        {
-		(yyval.symbole) = ajouter_symbole((yyvsp[-2].symbole), (yyvsp[0].symbole));
-		
-	}
-#line 1707 "y.tab.c"
+#line 165 "mongcc.y"
+                                    { (yyval.symbole) = ajouter_symbole((yyvsp[-2].symbole), (yyvsp[0].symbole)); }
+#line 1673 "y.tab.c"
     break;
 
   case 22:
-#line 213 "mongcc.y"
-        {
-	}
-#line 1714 "y.tab.c"
+#line 167 "mongcc.y"
+               {/* rien */}
+#line 1679 "y.tab.c"
     break;
 
   case 23:
-#line 218 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[0].arbre);
-	}
-#line 1722 "y.tab.c"
+#line 171 "mongcc.y"
+                           { (yyval.arbre) = (yyvsp[0].arbre); }
+#line 1685 "y.tab.c"
     break;
 
   case 24:
-#line 222 "mongcc.y"
-        {
-		(yyval.arbre)=NULL;
-	}
-#line 1730 "y.tab.c"
+#line 173 "mongcc.y"
+          { (yyval.arbre)=NULL; }
+#line 1691 "y.tab.c"
     break;
 
   case 25:
-#line 228 "mongcc.y"
-        {
-		ajouter_frere((yyvsp[-1].arbre),(yyvsp[0].arbre));
-	}
-#line 1738 "y.tab.c"
+#line 177 "mongcc.y"
+                                       { ajouter_frere((yyvsp[-1].arbre),(yyvsp[0].arbre)); }
+#line 1697 "y.tab.c"
     break;
 
   case 26:
-#line 232 "mongcc.y"
-        {
-		(yyval.arbre)=(yyvsp[0].arbre);
-	}
-#line 1746 "y.tab.c"
+#line 179 "mongcc.y"
+                      { (yyval.arbre)=(yyvsp[0].arbre);}
+#line 1703 "y.tab.c"
     break;
 
   case 27:
-#line 238 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[0].arbre);
-	}
-#line 1754 "y.tab.c"
+#line 183 "mongcc.y"
+                  { (yyval.arbre) = (yyvsp[0].arbre); }
+#line 1709 "y.tab.c"
     break;
 
   case 28:
-#line 242 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[0].arbre);
-	}
-#line 1762 "y.tab.c"
+#line 185 "mongcc.y"
+                    { (yyval.arbre) = (yyvsp[0].arbre); }
+#line 1715 "y.tab.c"
     break;
 
   case 29:
-#line 246 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[0].arbre);
-	}
-#line 1770 "y.tab.c"
+#line 187 "mongcc.y"
+               { (yyval.arbre) = (yyvsp[0].arbre); }
+#line 1721 "y.tab.c"
     break;
 
   case 30:
-#line 250 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[-1].arbre);
-	}
-#line 1778 "y.tab.c"
+#line 189 "mongcc.y"
+                          { (yyval.arbre) = (yyvsp[-1].arbre); }
+#line 1727 "y.tab.c"
     break;
 
   case 31:
-#line 254 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre("BLOC", (yyvsp[0].arbre), NULL, MON_BLOC);
-	}
-#line 1786 "y.tab.c"
+#line 191 "mongcc.y"
+               { (yyval.arbre) = creer_arbre("BLOC", (yyvsp[0].arbre), NULL, MON_BLOC); }
+#line 1733 "y.tab.c"
     break;
 
   case 32:
-#line 258 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[0].arbre);
-	}
-#line 1794 "y.tab.c"
+#line 193 "mongcc.y"
+                { (yyval.arbre) = (yyvsp[0].arbre); }
+#line 1739 "y.tab.c"
     break;
 
   case 33:
-#line 264 "mongcc.y"
-        {
+#line 197 "mongcc.y"
+                                                                          {
 		(yyval.arbre) = creer_arbre("FOR", (yyvsp[-6].arbre), NULL, MON_ITERATION);
 		ajouter_frere((yyvsp[-6].arbre), (yyvsp[-4].arbre));
 		ajouter_frere((yyvsp[-4].arbre), (yyvsp[-2].arbre));
 		ajouter_frere((yyvsp[-2].arbre), (yyvsp[0].arbre));
 	}
-#line 1805 "y.tab.c"
+#line 1750 "y.tab.c"
     break;
 
   case 34:
-#line 271 "mongcc.y"
-        {
+#line 204 "mongcc.y"
+                                              {
 		(yyval.arbre) = creer_arbre("WHILE",(yyvsp[-2].arbre),NULL, MON_ITERATION);
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 	}
-#line 1814 "y.tab.c"
+#line 1759 "y.tab.c"
     break;
 
   case 35:
-#line 278 "mongcc.y"
-        {
+#line 211 "mongcc.y"
+                                                    {
 		(yyval.arbre) = creer_arbre("IF", (yyvsp[-2].arbre), NULL, MON_IF);
 		ajouter_frere((yyvsp[-2].arbre), (yyvsp[0].arbre));
 	}
-#line 1823 "y.tab.c"
+#line 1768 "y.tab.c"
     break;
 
   case 36:
-#line 283 "mongcc.y"
-        {
+#line 216 "mongcc.y"
+                                                            {
 		(yyval.arbre) = creer_arbre("IF", (yyvsp[-4].arbre), NULL, MON_IF);
 		ajouter_frere((yyvsp[-4].arbre),(yyvsp[-2].arbre));
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 	}
-#line 1833 "y.tab.c"
+#line 1778 "y.tab.c"
     break;
 
   case 37:
-#line 289 "mongcc.y"
-        {
+#line 222 "mongcc.y"
+                                                              {
 		(yyval.arbre) = creer_arbre("SWITCH", (yyvsp[-4].arbre), NULL, MON_SWITCH);
 		verif_switch((yyvsp[-1].arbre));
 		ajouter_frere((yyvsp[-4].arbre), (yyvsp[-1].arbre));
 	}
-#line 1843 "y.tab.c"
+#line 1788 "y.tab.c"
     break;
 
   case 38:
-#line 298 "mongcc.y"
-        {
-		ajouter_frere((yyvsp[-1].arbre),(yyvsp[0].arbre));
-	}
-#line 1851 "y.tab.c"
+#line 230 "mongcc.y"
+                                       { ajouter_frere((yyvsp[-1].arbre),(yyvsp[0].arbre)); }
+#line 1794 "y.tab.c"
     break;
 
   case 39:
-#line 302 "mongcc.y"
-        {
-		(yyval.arbre)=(yyvsp[0].arbre);
-	}
-#line 1859 "y.tab.c"
+#line 232 "mongcc.y"
+                       { (yyval.arbre)=(yyvsp[0].arbre); }
+#line 1800 "y.tab.c"
     break;
 
   case 40:
-#line 309 "mongcc.y"
-        {
+#line 236 "mongcc.y"
+                                              {
 		char *buf = malloc(256);
 		snprintf(buf, 256, "CASE%s", (yyvsp[-2].label));
 		char* copy = malloc(256);
@@ -1869,216 +1810,199 @@ yyreduce:
 		(yyval.arbre) = creer_arbre(copy, creer_arbre("BLOC",(yyvsp[0].arbre),NULL,MON_BLOC), NULL, MON_CASE);
 		free(buf);
 	}
-#line 1873 "y.tab.c"
+#line 1814 "y.tab.c"
     break;
 
   case 41:
-#line 319 "mongcc.y"
-        {
+#line 246 "mongcc.y"
+                                         {
 		(yyval.arbre) = creer_arbre("DEFAULT", creer_arbre("BLOC",(yyvsp[0].arbre),NULL,MON_BLOC), NULL, MON_DEFAUT);
 	}
-#line 1881 "y.tab.c"
+#line 1822 "y.tab.c"
     break;
 
   case 42:
-#line 326 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre("BREAK", NULL, NULL, MON_BREAK);
-	}
-#line 1889 "y.tab.c"
+#line 252 "mongcc.y"
+                  { (yyval.arbre) = creer_arbre("BREAK", NULL, NULL, MON_BREAK); }
+#line 1828 "y.tab.c"
     break;
 
   case 43:
-#line 330 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre("RETURN",NULL,NULL, MON_RETURN);
-	}
-#line 1897 "y.tab.c"
+#line 254 "mongcc.y"
+                     { (yyval.arbre) = creer_arbre("RETURN",NULL,NULL, MON_RETURN); }
+#line 1834 "y.tab.c"
     break;
 
   case 44:
-#line 334 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre("RETURN",(yyvsp[-1].arbre),NULL,MON_RETURN);
-	}
-#line 1905 "y.tab.c"
+#line 256 "mongcc.y"
+                               { (yyval.arbre) = creer_arbre("RETURN",(yyvsp[-1].arbre),NULL,MON_RETURN); }
+#line 1840 "y.tab.c"
     break;
 
   case 45:
-#line 341 "mongcc.y"
-        { 
+#line 260 "mongcc.y"
+                                { 
 		verif_type_affectation((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		ajouter_frere((yyvsp[-2].arbre), (yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre(":=", (yyvsp[-2].arbre), NULL, MON_AUTRE);
 	}
-#line 1915 "y.tab.c"
+#line 1850 "y.tab.c"
     break;
 
   case 46:
-#line 350 "mongcc.y"
-        { 										
+#line 268 "mongcc.y"
+                                                      { 										
 		detruire_table();
 		(yyval.arbre) = (yyvsp[-1].arbre);
 	}
-#line 1924 "y.tab.c"
+#line 1859 "y.tab.c"
     break;
 
   case 47:
-#line 357 "mongcc.y"
-        { 
+#line 275 "mongcc.y"
+                                                     { 
 		int nb_param_fonction = verif_fonction((yyvsp[-4].label));
 		int nb_param_appel = verif_param_expression((yyvsp[-2].arbre));
-		if(nb_param_fonction==-1) // peut être un appel récursif.
+		if(nb_param_fonction == -1) // peut être un appel récursif.
 		{
-			set_la_recursion((yyvsp[-4].label),1,nb_param_appel);
+			set_la_recursion((yyvsp[-4].label), nb_param_appel);
 		} 
 		else {
 			if (nb_param_appel != nb_param_fonction) {
 				char *buf = malloc(256);
-				snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", (yyvsp[-4].label), nb_param_appel, nb_param_fonction);
+				snprintf(buf,256, "%s n'a pas le bon nombre de parametre, %d au lieu de %d", (yyvsp[-4].label), nb_param_appel, nb_param_fonction);
 				char *copy=malloc(256);
 				strcpy(copy,buf);
-				yyerror(copy);
 				free(buf);
-				exit(1);
+				erreur(copy,NULL);
 			}
 		}
 		(yyval.arbre)=creer_arbre((yyvsp[-4].label),(yyvsp[-2].arbre),NULL,MON_APPEL);
 	}
-#line 1949 "y.tab.c"
+#line 1883 "y.tab.c"
     break;
 
   case 48:
-#line 380 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre((yyvsp[0].label), NULL, NULL, MON_VARIABLE); 
-	}
-#line 1957 "y.tab.c"
+#line 297 "mongcc.y"
+                       { (yyval.arbre) = creer_arbre((yyvsp[0].label), NULL, NULL, MON_VARIABLE); }
+#line 1889 "y.tab.c"
     break;
 
   case 49:
-#line 384 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre("TAB", (yyvsp[0].arbre), NULL, MON_TABLEAU);
-	}
-#line 1965 "y.tab.c"
+#line 299 "mongcc.y"
+                  { (yyval.arbre) = creer_arbre("TAB", (yyvsp[0].arbre), NULL, MON_TABLEAU); }
+#line 1895 "y.tab.c"
     break;
 
   case 50:
-#line 391 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre((yyvsp[0].label), NULL, NULL,MON_AUTRE); 
-	}
-#line 1973 "y.tab.c"
+#line 303 "mongcc.y"
+                       { (yyval.arbre) = creer_arbre((yyvsp[0].label), NULL, NULL,MON_AUTRE); }
+#line 1901 "y.tab.c"
     break;
 
   case 51:
-#line 395 "mongcc.y"
-        {
-		ajouter_frere((yyvsp[-3].arbre),(yyvsp[-1].arbre));
-	}
-#line 1981 "y.tab.c"
+#line 305 "mongcc.y"
+                                     { ajouter_frere((yyvsp[-3].arbre),(yyvsp[-1].arbre)); }
+#line 1907 "y.tab.c"
     break;
 
   case 52:
-#line 401 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[-1].arbre);
-	}
-#line 1989 "y.tab.c"
+#line 309 "mongcc.y"
+                           { (yyval.arbre) = (yyvsp[-1].arbre); }
+#line 1913 "y.tab.c"
     break;
 
   case 53:
-#line 405 "mongcc.y"
-        { 
+#line 311 "mongcc.y"
+                                     { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre("+",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 1998 "y.tab.c"
+#line 1922 "y.tab.c"
     break;
 
   case 54:
-#line 410 "mongcc.y"
-        { 
+#line 316 "mongcc.y"
+                                     { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre("-",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 2007 "y.tab.c"
+#line 1931 "y.tab.c"
     break;
 
   case 55:
-#line 415 "mongcc.y"
-        { 
+#line 321 "mongcc.y"
+                                        { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre("/",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 2016 "y.tab.c"
+#line 1940 "y.tab.c"
     break;
 
   case 56:
-#line 420 "mongcc.y"
-        { 
+#line 326 "mongcc.y"
+                                        { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre("*",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 2025 "y.tab.c"
+#line 1949 "y.tab.c"
     break;
 
   case 57:
-#line 425 "mongcc.y"
-        { 
+#line 331 "mongcc.y"
+                                       { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre(">>",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 2034 "y.tab.c"
+#line 1958 "y.tab.c"
     break;
 
   case 58:
-#line 430 "mongcc.y"
-        { 
+#line 336 "mongcc.y"
+                                       { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre("<<",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 2043 "y.tab.c"
+#line 1967 "y.tab.c"
     break;
 
   case 59:
-#line 435 "mongcc.y"
-        { 
+#line 341 "mongcc.y"
+                                     { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre("&",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 2052 "y.tab.c"
+#line 1976 "y.tab.c"
     break;
 
   case 60:
-#line 440 "mongcc.y"
-        { 
+#line 346 "mongcc.y"
+                                    { 
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre("|",(yyvsp[-2].arbre),NULL,MON_AUTRE);
 	}
-#line 2061 "y.tab.c"
+#line 1985 "y.tab.c"
     break;
 
   case 61:
-#line 445 "mongcc.y"
-        { 
+#line 351 "mongcc.y"
+                                     { 
 		(yyval.arbre) = creer_arbre("-", (yyvsp[0].arbre), NULL,MON_AUTRE);
 	}
-#line 2069 "y.tab.c"
+#line 1993 "y.tab.c"
     break;
 
   case 62:
-#line 449 "mongcc.y"
-        { 
+#line 355 "mongcc.y"
+                    { 
 		(yyval.arbre) = creer_arbre((yyvsp[0].label),NULL,NULL,MON_AUTRE);
 	}
-#line 2077 "y.tab.c"
+#line 2001 "y.tab.c"
     break;
 
   case 63:
-#line 453 "mongcc.y"
-        { 
+#line 359 "mongcc.y"
+                   { 
 		if (!strcmp("TAB", (yyvsp[0].arbre)->label)) {
 			rechercher_symbole((yyvsp[0].arbre)->fils_t->label);
 		} else {
@@ -2086,17 +2010,18 @@ yyreduce:
 		}
 		(yyval.arbre) = (yyvsp[0].arbre); 
 	}
-#line 2090 "y.tab.c"
+#line 2014 "y.tab.c"
     break;
 
   case 64:
-#line 462 "mongcc.y"
-        { 
+#line 368 "mongcc.y"
+                                                   { 
 		int nb_param_fonction = verif_fonction((yyvsp[-3].label));
 		int nb_param_appel = verif_param_expression((yyvsp[-1].arbre));
-		if(nb_param_fonction==-1) // peut être un appel récursif.
+
+		if(nb_param_fonction == -1) // peut être un appel récursif.
 		{
-			set_la_recursion((yyvsp[-3].label),1,nb_param_appel);
+			set_la_recursion((yyvsp[-3].label), nb_param_appel);
 		} 
 		else {
 			if (nb_param_appel != nb_param_fonction) {
@@ -2104,130 +2029,116 @@ yyreduce:
 				snprintf(buf,256, "%s n'a pas le bon nombre de parametre. %d au lieu de %d.", (yyvsp[-3].label), nb_param_appel, nb_param_fonction);
 				char *copy=malloc(256);
 				strcpy(copy,buf);
-				yyerror(copy);
 				free(buf);
-				exit(1);
+				erreur(copy,NULL);
 			}
 		}
-		
 		(yyval.arbre) = creer_arbre((yyvsp[-3].label), (yyvsp[-1].arbre),NULL,MON_APPEL);
 	}
-#line 2116 "y.tab.c"
+#line 2039 "y.tab.c"
     break;
 
   case 65:
-#line 486 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[0].arbre);
-	}
-#line 2124 "y.tab.c"
+#line 391 "mongcc.y"
+                           { (yyval.arbre) = (yyvsp[0].arbre); }
+#line 2045 "y.tab.c"
     break;
 
   case 66:
-#line 489 "mongcc.y"
-          {/* rien */}
-#line 2130 "y.tab.c"
+#line 393 "mongcc.y"
+          { (yyval.arbre) = NULL; }
+#line 2051 "y.tab.c"
     break;
 
   case 67:
-#line 493 "mongcc.y"
-        {
-		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
-	}
-#line 2138 "y.tab.c"
+#line 397 "mongcc.y"
+                                          { ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre)); }
+#line 2057 "y.tab.c"
     break;
 
   case 68:
-#line 497 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[0].arbre);
-	}
-#line 2146 "y.tab.c"
+#line 399 "mongcc.y"
+                     { (yyval.arbre) = (yyvsp[0].arbre); }
+#line 2063 "y.tab.c"
     break;
 
   case 69:
-#line 503 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre("NOT", (yyvsp[-1].arbre), NULL, MON_AUTRE);
-	}
-#line 2154 "y.tab.c"
+#line 403 "mongcc.y"
+                              { (yyval.arbre) = creer_arbre("NOT", (yyvsp[-1].arbre), NULL, MON_AUTRE); }
+#line 2069 "y.tab.c"
     break;
 
   case 70:
-#line 507 "mongcc.y"
-        {
-		(yyval.arbre) = creer_arbre((yyvsp[-1].label), (yyvsp[-2].arbre), (yyvsp[0].arbre), MON_AUTRE);
-	}
-#line 2162 "y.tab.c"
+#line 405 "mongcc.y"
+                                                   { (yyval.arbre) = creer_arbre((yyvsp[-1].label), (yyvsp[-2].arbre), (yyvsp[0].arbre), MON_AUTRE); }
+#line 2075 "y.tab.c"
     break;
 
   case 71:
-#line 511 "mongcc.y"
-        {
-		(yyval.arbre) = (yyvsp[-1].arbre);
-	}
-#line 2170 "y.tab.c"
+#line 407 "mongcc.y"
+                            { (yyval.arbre) = (yyvsp[-1].arbre); }
+#line 2081 "y.tab.c"
     break;
 
   case 72:
-#line 515 "mongcc.y"
-        {
+#line 409 "mongcc.y"
+                                            {
 		ajouter_frere((yyvsp[-2].arbre),(yyvsp[0].arbre));
 		(yyval.arbre) = creer_arbre((yyvsp[-1].label), (yyvsp[-2].arbre),NULL, MON_AUTRE);
 	}
-#line 2179 "y.tab.c"
+#line 2090 "y.tab.c"
     break;
 
   case 73:
-#line 521 "mongcc.y"
+#line 416 "mongcc.y"
                      { (yyval.label) = "&&"; }
-#line 2185 "y.tab.c"
+#line 2096 "y.tab.c"
     break;
 
   case 74:
-#line 522 "mongcc.y"
+#line 417 "mongcc.y"
                      { (yyval.label) = "||"; }
-#line 2191 "y.tab.c"
+#line 2102 "y.tab.c"
     break;
 
   case 75:
-#line 525 "mongcc.y"
+#line 421 "mongcc.y"
                    { (yyval.label) = "<"; }
-#line 2197 "y.tab.c"
+#line 2108 "y.tab.c"
     break;
 
   case 76:
-#line 526 "mongcc.y"
+#line 422 "mongcc.y"
                    { (yyval.label) = ">"; }
-#line 2203 "y.tab.c"
+#line 2114 "y.tab.c"
     break;
 
   case 77:
-#line 527 "mongcc.y"
+#line 423 "mongcc.y"
                     { (yyval.label) = ">=";}
-#line 2209 "y.tab.c"
+#line 2120 "y.tab.c"
     break;
 
   case 78:
-#line 528 "mongcc.y"
+#line 424 "mongcc.y"
                     { (yyval.label) = "<=";}
-#line 2215 "y.tab.c"
+#line 2126 "y.tab.c"
     break;
 
   case 79:
-#line 529 "mongcc.y"
+#line 425 "mongcc.y"
                    { (yyval.label) = "==";}
-#line 2221 "y.tab.c"
+#line 2132 "y.tab.c"
     break;
 
   case 80:
-#line 530 "mongcc.y"
+#line 426 "mongcc.y"
                     { (yyval.label) = "!=";}
-#line 2227 "y.tab.c"
+#line 2138 "y.tab.c"
     break;
 
 
-#line 2231 "y.tab.c"
+#line 2142 "y.tab.c"
 
       default: break;
     }
@@ -2459,16 +2370,14 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 532 "mongcc.y"
+#line 429 "mongcc.y"
 
 
 
 
 int main()
 {
-	//struct _recursion *la_recursion = (recursion*) malloc(sizeof(recursion));
 	reset_la_recursion();
 	yyparse();
-	
 	return 0;
 }
