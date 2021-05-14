@@ -57,6 +57,10 @@ arbre *creer_arbre(char *label, arbre *fils, arbre *frere, enum type_arbre typeE
     return nouvel_arbre;
 }
 
+void *ajouter_symbole_arbre(arbre *courant, symbole *symbole_a_ajouter) {
+    courant->symbole_t = symbole_a_ajouter;
+}
+
 // on ajoute le premier fils a l'arbre actuel
 void *ajouter_fils(arbre *actuel, arbre *fils) {
     actuel->fils_t = fils;
@@ -288,11 +292,11 @@ void verif_switch(arbre *arbre_switch) {
 
 void erreur(char *description, char *terme_concerne) {
     if (terme_concerne != NULL) {
-        fprintf( stderr, "%s : %s, ligne : %d\n", terme_concerne, description, yylineno );
+        fprintf( stderr, "\x1B[31m%s : %s, ligne : %d\x1B[0m\n", terme_concerne, description, yylineno );
     } else {
-        fprintf( stderr, "%s, ligne : %d\n", description, yylineno );
+        fprintf( stderr, "\x1B[31m%s, ligne : %d\x1B[0m\n", description, yylineno );
     }
-    exit(1);
+    exit(2);
 }
 
 void yyerror(char *s)

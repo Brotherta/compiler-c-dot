@@ -5,7 +5,7 @@ INTERDIT                [²&é~"#'è`ç^à@°€$£¤¨µ%ù§.?■ÜÖ☺]
 
 %{
 #include "y.tab.h"
-#include "structure.h"
+#include "src/structure/structure.h"
 
 %}
 

@@ -1,6 +1,10 @@
 int a;
 
+void fact(int n) {
+  n = 1;
+}
+
 int main() {
-  int a;
+  b = fact(0);
   return 1;
 } 

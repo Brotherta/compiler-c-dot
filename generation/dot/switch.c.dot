@@ -7,33 +7,34 @@ digraph exempleminiC {
 	node_5 [label ="3"]
 	node_6 [label ="SWITCH"]
 	node_7 [label ="i"]
-	node_8 [label ="CASE"]
-	node_9 [label ="0"]
+	node_8 [label ="CASE0"]
+	node_9 [label ="BLOC"]
 	node_10 [label ="printd" shape=septagon]
 	node_11 [label ="0"]
 	node_12 [label ="BREAK" shape = box]
-	node_13 [label ="CASE"]
-	node_14 [label ="1"]
+	node_13 [label ="CASE1"]
+	node_14 [label ="BLOC"]
 	node_15 [label ="printd" shape=septagon]
 	node_16 [label ="1"]
 	node_17 [label ="BREAK" shape = box]
-	node_18 [label ="CASE"]
-	node_19 [label ="2"]
+	node_18 [label ="CASE2"]
+	node_19 [label ="BLOC"]
 	node_20 [label ="printd" shape=septagon]
 	node_21 [label ="2"]
 	node_22 [label ="BREAK" shape = box]
-	node_23 [label ="CASE"]
-	node_24 [label ="3"]
+	node_23 [label ="CASE3"]
+	node_24 [label ="BLOC"]
 	node_25 [label ="printd" shape=septagon]
 	node_26 [label ="3"]
-	node_27 [label ="CASE"]
-	node_28 [label ="4"]
+	node_27 [label ="CASE4"]
+	node_28 [label ="BLOC"]
 	node_29 [label ="printd" shape=septagon]
 	node_30 [label ="4"]
 	node_31 [label ="DEFAULT"]
-	node_32 [label ="printd" shape=septagon]
-	node_33 [label ="-"]
-	node_34 [label ="1"]
+	node_32 [label ="BLOC"]
+	node_33 [label ="printd" shape=septagon]
+	node_34 [label ="-"]
+	node_35 [label ="1"]
 	node_0 -> node_1
 	node_1 -> node_2
 	node_2 -> node_3
@@ -43,30 +44,31 @@ digraph exempleminiC {
 	node_6 -> node_7
 	node_6 -> node_8
 	node_8 -> node_9
-	node_8 -> node_10
+	node_9 -> node_10
 	node_10 -> node_11
-	node_8 -> node_12
+	node_9 -> node_12
 	node_6 -> node_13
 	node_13 -> node_14
-	node_13 -> node_15
+	node_14 -> node_15
 	node_15 -> node_16
-	node_13 -> node_17
+	node_14 -> node_17
 	node_6 -> node_18
 	node_18 -> node_19
-	node_18 -> node_20
+	node_19 -> node_20
 	node_20 -> node_21
-	node_18 -> node_22
+	node_19 -> node_22
 	node_6 -> node_23
 	node_23 -> node_24
-	node_23 -> node_25
+	node_24 -> node_25
 	node_25 -> node_26
 	node_6 -> node_27
 	node_27 -> node_28
-	node_27 -> node_29
+	node_28 -> node_29
 	node_29 -> node_30
 	node_6 -> node_31
 	node_31 -> node_32
 	node_32 -> node_33
 	node_33 -> node_34
+	node_34 -> node_35
 
 }

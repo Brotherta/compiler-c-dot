@@ -1,6 +1,6 @@
 %{
 	extern int yylineno;
-	#include "dot/dot_builder.h"
+	#include "src/dot/dot_builder.h"
 %}
 
 %token VOID INT FOR WHILE IF ELSE SWITCH CASE DEFAULT
@@ -59,6 +59,7 @@
 programme:
 	liste_declarations liste_fonctions {
 		PROGRAMME = creer_arbre("programme", $2, NULL, MON_AUTRE);
+		ajouter_symbole_arbre(PROGRAMME, TABLE[ACC]);
 		creer_fichier_dot(PROGRAMME);
 	}
 ;
@@ -105,6 +106,17 @@ declarateur:
 
 fonction:	
 	type IDENTIFICATEUR '(' liste_parms ')' '{' liste_declarations liste_instructions '}' {
+		char* buf = malloc(256);
+		snprintf(buf,256,"%s, %s",$2,$1);
+
+		char* copy = malloc(256);
+		strcpy(copy, buf);
+
+		$$ = creer_arbre(copy, NULL, NULL, MON_FONCTION);
+
+		ajouter_symbole(TABLE[ACC-1], TABLE[ACC]);
+		ajouter_symbole_arbre($$, TABLE[ACC-1]);
+
 		detruire_table_fonction();
 		struct _arbre *bloc;
 		TABLE[ACC] = ajouter_symbole(TABLE[ACC], creer_symbole_fonction($2, $1, $4));
@@ -128,13 +140,9 @@ fonction:
 		} else {
 			bloc = creer_arbre("BLOC", $8, NULL, MON_BLOC);
 		}
-		char* buf = malloc(256);
-		snprintf(buf,256,"%s, %s",$2,$1);
+		
+		ajouter_fils($$, bloc);
 
-		char* copy = malloc(256);
-		strcpy(copy, buf);
-
-		$$ = creer_arbre(copy, bloc, NULL, MON_FONCTION);
 		free(buf);
 	}
 ;
@@ -265,7 +273,8 @@ affectation:
 ;
 
 bloc:	
-	'{' liste_declarations liste_instructions '}' { 										
+	'{' liste_declarations liste_instructions '}' { 
+		ajouter_symbole_arbre($$, TABLE[ACC]);										
 		detruire_table();
 		$$ = $3;
 	}

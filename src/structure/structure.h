@@ -36,7 +36,7 @@ enum type_arbre{
 typedef struct _arbre {
 	char *label;
 	enum type_arbre type_arbre_t;
-	struct _symbole *symbol_t;
+	struct _symbole *symbole_t;
 	struct _arbre *frere_t;
 	struct _arbre *fils_t;
 	int id;
@@ -100,6 +100,11 @@ void detruire_table_fonction();
 	Initialise un nouvel arbre avec le label, un fils un frere et son type.
 */
 arbre *creer_arbre(char *label, arbre *fils, arbre *frere, enum type_arbre mon_mon);
+
+/*
+	Ajoute la table des symboles à l'arbre courant.
+*/
+void *ajouter_symbole_arbre(arbre *courant, symbole *symbole_a_ajouter);
 
 /*
 	Ajoute un fils à l'arbre actuel.
