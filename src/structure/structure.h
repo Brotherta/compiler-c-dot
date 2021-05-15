@@ -32,7 +32,6 @@ enum type_arbre{
 	MON_AUTRE
 };
 
-
 typedef struct _arbre {
 	char *label;
 	enum type_arbre type_arbre_t;
