@@ -6,7 +6,7 @@ Pour installer les dépendances du Compilateur :
 
 ## Comment lancer ce Compilateur
 Pour lancer le compilateur : 
-* Sur un fichier : make run FILE=fichier.c      Compile fichier.c et ajoute fichier.c.dot dans generation/dot et fichier.c.pdf dans generation/pdf.
+* Sur un fichier : make run FILE=fichier.c		Compile fichier.c et ajoute fichier.c.dot dans generation/dot et fichier.c.pdf dans generation/pdf.
 * Sur tout les fichiers de test : make run_all  Compile tout les .c du dossier Test et ajoute leur .dot et .pdf dans les dossiers prévues.
 
 
